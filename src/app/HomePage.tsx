@@ -21,7 +21,7 @@ export function HomePage() {
       </div>
 
       <a
-        href={hrefFor({ name: 'series' })}
+        href={hrefFor({ name: 'editor', formatId: 'quiz', fromDocument: true })}
         className="group mt-8 flex items-center gap-4 rounded-2xl bg-ink p-4 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg sm:p-5"
       >
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-amber">

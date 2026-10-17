@@ -1,3 +1,4 @@
+import { OllamaSettings } from '@/components/OllamaSettings';
 import { Field, Section } from '@/components/ui/fields';
 import { LOCALES, useT, type Locale } from '@/i18n';
 import { useSettings } from '@/state/settings';
@@ -30,6 +31,10 @@ export function SettingsPage() {
             </select>
           )}
         </Field>
+      </Section>
+
+      <Section title={t('settings.ai')}>
+        <OllamaSettings />
       </Section>
 
       <Section title={t('settings.privacy')}>

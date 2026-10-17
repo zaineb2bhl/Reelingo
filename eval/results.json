@@ -1,0 +1,4481 @@
+{
+  "generatedAt": "2026-10-17T21:32:43.474Z",
+  "config": {
+    "models": [
+      "qwen2.5:3b",
+      "qwen2.5:1.5b",
+      "llama3.2:1b"
+    ],
+    "passagesPerRequest": 6,
+    "batchSize": 2,
+    "temperature": 0.2,
+    "retries": 1
+  },
+  "notes": [
+    "Rule-based \"grounded\" = its supporting sentence is among the passages retrieved for the instructions (it may use the wider document otherwise).",
+    "LLM grounded = passed Zod validation, the exact-sentence grounding check and the per-format checks.",
+    "Latency includes retries; models are warmed up first; CPU-only machine."
+  ],
+  "retrieval": {
+    "summary": [
+      {
+        "lang": "all",
+        "queries": 16,
+        "recall3": 0.8437499999999999,
+        "mrr": 0.96875
+      },
+      {
+        "lang": "en",
+        "queries": 10,
+        "recall3": 0.7833333333333333,
+        "mrr": 0.95
+      },
+      {
+        "lang": "fr",
+        "queries": 4,
+        "recall3": 0.9166666666666666,
+        "mrr": 1
+      },
+      {
+        "lang": "ar",
+        "queries": 2,
+        "recall3": 1,
+        "mrr": 1
+      }
+    ],
+    "rows": [
+      {
+        "doc": "en-office.md",
+        "lang": "en",
+        "instructions": "2 quiz questions about deadlines",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "deadline — the time by which a task must be finished — date limite",
+          "Good communication helps a team to meet its deadlines.",
+          "Today the team must finish the report before the deadline.",
+          "Word — Meaning — Translation",
+          "colleague — a person you work with — collègue",
+          "Everyone congratulates her."
+        ]
+      },
+      {
+        "doc": "en-office.md",
+        "lang": "en",
+        "instructions": "2 true or false statements about phrasal verbs",
+        "recall3": 0.6666666666666666,
+        "mrr": 1,
+        "retrieved": [
+          "The meeting was put off until Friday because the manager was ill.",
+          "Tom filled in for Sarah while she was on holiday.",
+          "set up – to arrange or organise something",
+          "follow up – to find out more or take further action",
+          "put off – to delay doing something",
+          "fill in – to do someone's job for a short time"
+        ]
+      },
+      {
+        "doc": "en-travel.md",
+        "lang": "en",
+        "instructions": "2 words about luggage and tickets",
+        "recall3": 0.6666666666666666,
+        "mrr": 1,
+        "retrieved": [
+          "The conductor checked every ticket and helped an old man with his luggage.",
+          "luggage – the bags you take on a journey",
+          "A return ticket, please.",
+          "Passengers wait on the platform with their luggage.",
+          "ticket – a piece of paper that lets you travel",
+          "We usually buy a ticket at the station before the journey."
+        ]
+      },
+      {
+        "doc": "en-travel.md",
+        "lang": "en",
+        "instructions": "top 5 words about the train",
+        "recall3": 0.6666666666666666,
+        "mrr": 0.5,
+        "retrieved": [
+          "Which platform does the train leave from?",
+          "platform – the place where you get on a train",
+          "The train leaves from platform three at nine o'clock.",
+          "Trains are often faster than cars and more comfortable than buses.",
+          "A return ticket, please.",
+          "Is this seat free?"
+        ]
+      },
+      {
+        "doc": "en-food.md",
+        "lang": "en",
+        "instructions": "2 questions on countable and uncountable nouns",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "We can count carrots and onions, so they are countable nouns.",
+          "Salt, rice and water are uncountable nouns.",
+          "We say \"a few carrots\" but \"a little salt\".",
+          "We use \"much\" with uncountable nouns in questions: How much salt do we need?"
+        ]
+      },
+      {
+        "doc": "en-food.md",
+        "lang": "en",
+        "instructions": "2 true or false statements about Maria's shopping",
+        "recall3": 0.6666666666666666,
+        "mrr": 1,
+        "retrieved": [
+          "She writes a shopping list so she does not forget any ingredient.",
+          "Maria wants to cook a vegetable soup for her friends on Saturday.",
+          "The cashier gives Maria a receipt, and she puts it in her purse.",
+          "The recipe needs carrots, onions, potatoes and a little salt.",
+          "At the market, the vegetables are fresh and cheap.",
+          "She finds a simple recipe in an old cookbook."
+        ]
+      },
+      {
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "instructions": "2 quiz questions on irregular verbs",
+        "recall3": 0.5,
+        "mrr": 1,
+        "retrieved": [
+          "Many common verbs are irregular.",
+          "Regular verbs add -ed: work becomes worked and play becomes played.",
+          "In questions we use did and the base verb: Did you see the film last night?",
+          "In negative sentences we use did not and the base verb: She did not go to school yesterday.",
+          "Go becomes went, see becomes saw and buy becomes bought.",
+          "We use the past simple for finished actions in the past."
+        ]
+      },
+      {
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "instructions": "1 word from Ahmed's weekend story",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "Last weekend, Ahmed visited London with his sister.",
+          "Ahmed did not like the weather because it rained all day on Sunday.",
+          "In the afternoon they bought souvenirs at a market.",
+          "They went home on Sunday night, tired but happy.",
+          "They took the train on Friday evening and arrived at ten o'clock.",
+          "On Saturday morning they walked along the river and saw Big Ben."
+        ]
+      },
+      {
+        "doc": "en-health.md",
+        "lang": "en",
+        "instructions": "2 true or false statements about sleep",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "Stress can cause headaches and make it hard to sleep.",
+          "Many people sleep less because they use their phones in bed.",
+          "Doctors say that adults should sleep seven to nine hours every night.",
+          "Drinking enough water helps your body and your brain.",
+          "A good habit takes about two months to form, so it is important to be patient.",
+          "Walking for thirty minutes a day is a simple form of exercise."
+        ]
+      },
+      {
+        "doc": "en-health.md",
+        "lang": "en",
+        "instructions": "top 5 healthy habits",
+        "recall3": 0.6666666666666666,
+        "mrr": 1,
+        "retrieved": [
+          "habit – something you do often, almost without thinking",
+          "A good habit takes about two months to form, so it is important to be patient.",
+          "exercise – physical activity to stay fit",
+          "Stress can cause headaches and make it hard to sleep."
+        ]
+      },
+      {
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "instructions": "2 questions sur les articles partitifs",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "On utilise du, de la et des pour une quantité non précise : je mange du pain, je bois de l'eau.",
+          "Après une négation, on utilise de : je ne mange pas de viande."
+        ]
+      },
+      {
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "instructions": "2 mots sur le marché",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "Chaque samedi, Marie va au marché avec sa grand-mère.",
+          "le marché : un lieu où on achète des produits frais",
+          "Au marché, les vendeurs proposent souvent de goûter leurs produits.",
+          "Elle achète des pommes, des carottes et des tomates.",
+          "la carotte : un légume orange et long",
+          "la saison : une période de l'année"
+        ]
+      },
+      {
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "instructions": "2 vrai ou faux sur la pluie et l'orage",
+        "recall3": 0.6666666666666666,
+        "mrr": 1,
+        "retrieved": [
+          "la pluie : l'eau qui tombe des nuages",
+          "La météo annonce de la pluie pour l'après-midi.",
+          "l'orage : une tempête avec des éclairs et du tonnerre",
+          "Le soir, un orage éclate et la ville est sous l'eau.",
+          "le nuage : une masse blanche ou grise dans le ciel",
+          "Ce matin, il fait froid et le ciel est gris."
+        ]
+      },
+      {
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "instructions": "2 questions sur le futur proche",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+          "On l'utilise pour une action qui va arriver bientôt : nous allons partir à huit heures."
+        ]
+      },
+      {
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "instructions": "2 أسئلة عن المكتبة",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "المكتبة: مكان فيه كتب كثيرة",
+          "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+          "الواجب: العمل الذي يقوم به التلميذ في البيت",
+          "في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.",
+          "في المساء، يكتب أحمد الواجب ويراجع دروسه."
+        ]
+      },
+      {
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "instructions": "2 صح أو خطأ عن أحمد",
+        "recall3": 1,
+        "mrr": 1,
+        "retrieved": [
+          "يذهب أحمد إلى المدرسة كل صباح.",
+          "يحب أحمد معلم اللغة العربية كثيرًا.",
+          "في المساء، يكتب أحمد الواجب ويراجع دروسه.",
+          "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+          "في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.",
+          "المعلم يشجع التلاميذ على القراءة كل يوم."
+        ]
+      }
+    ]
+  },
+  "generation": {
+    "summary": [
+      {
+        "generator": "rule-based",
+        "unavailable": false,
+        "requested": 29,
+        "delivered": 29,
+        "schemaValid": 29,
+        "returnedRaw": 29,
+        "groundedFirst": 29,
+        "groundedAfterRetry": 29,
+        "fallback": 0,
+        "secondsPerItem": 0.018362437931034474,
+        "distractors": {
+          "distractors": 34,
+          "posMatch": 5,
+          "posChecked": 7,
+          "duplicates": 0
+        },
+        "byLang": {
+          "en": {
+            "requested": 17,
+            "grounded": 17
+          },
+          "fr": {
+            "requested": 8,
+            "grounded": 8
+          },
+          "ar": {
+            "requested": 4,
+            "grounded": 4
+          }
+        }
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "unavailable": false,
+        "requested": 29,
+        "delivered": 29,
+        "schemaValid": 31,
+        "returnedRaw": 31,
+        "groundedFirst": 17,
+        "groundedAfterRetry": 21,
+        "fallback": 8,
+        "secondsPerItem": 18.577632793103447,
+        "distractors": {
+          "distractors": 18,
+          "posMatch": 6,
+          "posChecked": 11,
+          "duplicates": 0
+        },
+        "byLang": {
+          "en": {
+            "requested": 17,
+            "grounded": 13
+          },
+          "fr": {
+            "requested": 8,
+            "grounded": 5
+          },
+          "ar": {
+            "requested": 4,
+            "grounded": 3
+          }
+        }
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "unavailable": false,
+        "requested": 29,
+        "delivered": 29,
+        "schemaValid": 42,
+        "returnedRaw": 46,
+        "groundedFirst": 12,
+        "groundedAfterRetry": 16,
+        "fallback": 13,
+        "secondsPerItem": 18.43841911724137,
+        "distractors": {
+          "distractors": 15,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "byLang": {
+          "en": {
+            "requested": 17,
+            "grounded": 13
+          },
+          "fr": {
+            "requested": 8,
+            "grounded": 3
+          },
+          "ar": {
+            "requested": 4,
+            "grounded": 0
+          }
+        }
+      },
+      {
+        "generator": "llama3.2:1b",
+        "unavailable": false,
+        "requested": 29,
+        "delivered": 29,
+        "schemaValid": 33,
+        "returnedRaw": 33,
+        "groundedFirst": 7,
+        "groundedAfterRetry": 11,
+        "fallback": 18,
+        "secondsPerItem": 12.453688579310349,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "byLang": {
+          "en": {
+            "requested": 17,
+            "grounded": 9
+          },
+          "fr": {
+            "requested": 8,
+            "grounded": 2
+          },
+          "ar": {
+            "requested": 4,
+            "grounded": 0
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "generator": "rule-based",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions about deadlines",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 162.9773,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 3,
+          "posChecked": 3,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Today the team must finish the report before the _____.",
+            "supportingSentence": "Today the team must finish the report before the deadline.",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Today the team must finish the report before the *_____*.",
+              "options": [
+                {
+                  "text": "colleague",
+                  "correct": false
+                },
+                {
+                  "text": "productivity",
+                  "correct": false
+                },
+                {
+                  "text": "communication",
+                  "correct": false
+                },
+                {
+                  "text": "deadline",
+                  "correct": true
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*deadline*: the time by which a task must be finished."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "What does colleague mean?",
+            "supportingSentence": "colleague — a person you work with — collègue",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What does *colleague* mean?",
+              "options": [
+                {
+                  "text": "The time by which a task must be finished",
+                  "correct": false
+                },
+                {
+                  "text": "A person you work with",
+                  "correct": true
+                },
+                {
+                  "text": "A written document describing the findings of some individual or group",
+                  "correct": false
+                },
+                {
+                  "text": "An instance or single occasion for some event",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "From the text: “Her colleague Tom often helps her when the work becomes stressful.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about phrasal verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 33.399400000000014,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Tom filled in for Sarah while she was on holiday.",
+            "supportingSentence": "Tom filled in for Sarah while she was on holiday.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Tom filled in for Sarah while she was on holiday.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Tom filled in for Sarah while she was on holiday.”"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Tom did not fill in for Sarah while she was on holiday.",
+            "supportingSentence": "Tom filled in for Sarah while she was on holiday.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Tom did not fill in for Sarah while she was on holiday.",
+              "answer": false,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Tom filled in for Sarah while she was on holiday.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "2 words about luggage and tickets",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 18.724099999999908,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "luggage",
+            "supportingSentence": "luggage – the bags you take on a journey",
+            "data": {
+              "label": "Word of the day",
+              "word": "luggage",
+              "ipa": "ˈlʌɡədʒ",
+              "partOfSpeech": "noun",
+              "definition": "The bags you take on a journey.",
+              "example": "The conductor checked every ticket and helped an old man with his luggage.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "ticket",
+            "supportingSentence": "ticket – a piece of paper that lets you travel",
+            "data": {
+              "label": "Word of the day",
+              "word": "ticket",
+              "ipa": "ˈtɪkət",
+              "partOfSpeech": "noun",
+              "definition": "A piece of paper that lets you travel.",
+              "example": "The conductor checked every ticket and helped an old man with his luggage.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 words about the train",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 14.40910000000008,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Top 5 key words: Reading: A trip to the coast",
+            "supportingSentence": "platform – the place where you get on a train",
+            "data": {
+              "title": "Top 5 *key words*: Reading: A trip to the coast",
+              "items": [
+                {
+                  "text": "platform",
+                  "detail": "the place where you get on a train"
+                },
+                {
+                  "text": "ticket",
+                  "detail": "a piece of paper that lets you travel"
+                },
+                {
+                  "text": "journey",
+                  "detail": "the act of traveling from one place to another"
+                },
+                {
+                  "text": "train",
+                  "detail": "public transport provided by a line of railway cars coupled together and drawn by a…"
+                },
+                {
+                  "text": "coast",
+                  "detail": "the shore of a sea or ocean"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 questions on countable and uncountable nouns",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 26.822799999999916,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 5,
+          "posMatch": 2,
+          "posChecked": 2,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Salt, rice and water are uncountable _____.",
+            "supportingSentence": "Salt, rice and water are uncountable nouns.",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Salt, rice and water are uncountable *_____*.",
+              "options": [
+                {
+                  "text": "carrots",
+                  "correct": false
+                },
+                {
+                  "text": "nouns",
+                  "correct": true
+                },
+                {
+                  "text": "onions",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*noun*: a content word that can be used to refer to a person, place, thing, quality, or action."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "What does carrot mean?",
+            "supportingSentence": "We can count carrots and onions, so they are countable nouns.",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What does *carrot* mean?",
+              "options": [
+                {
+                  "text": "The bulb of an onion plant",
+                  "correct": false
+                },
+                {
+                  "text": "Deep orange edible root of the cultivated carrot plant",
+                  "correct": true
+                },
+                {
+                  "text": "Grains used as food either unpolished or more often polished",
+                  "correct": false
+                },
+                {
+                  "text": "A content word that can be used to refer to a person, place, thing, quality",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "From the text: “We can count carrots and onions, so they are countable nouns.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about Maria's shopping",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 38.973799999999756,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "The recipe needs carrots, onions, potatoes and a little salt.",
+            "supportingSentence": "The recipe needs carrots, onions, potatoes and a little salt.",
+            "data": {
+              "label": "True or false?",
+              "statement": "The recipe needs carrots, onions, potatoes and a little salt.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “The recipe needs carrots, onions, potatoes and a little salt.”"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Maria wants to cook a recipe soup for her friends on Saturday.",
+            "supportingSentence": "Maria wants to cook a vegetable soup for her friends on Saturday.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Maria wants to cook a recipe soup for her friends on Saturday.",
+              "answer": false,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Maria wants to cook a vegetable soup for her friends on Saturday.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions on irregular verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 12.066800000000057,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 5,
+          "posMatch": 0,
+          "posChecked": 2,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "In negative sentences we use did not and the base _____: She did not go to school yesterday.",
+            "supportingSentence": "In negative sentences we use did not and the base verb: She did not go to school yesterday.",
+            "data": {
+              "label": "Fill the gap",
+              "question": "In negative sentences we use did not and the base *_____*: She did not go to school yesterday.",
+              "options": [
+                {
+                  "text": "played",
+                  "correct": false
+                },
+                {
+                  "text": "verb",
+                  "correct": true
+                },
+                {
+                  "text": "worked",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*verb*: the word class that serves as the predicate of a sentence."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "What does irregular mean?",
+            "supportingSentence": "Many common verbs are irregular.",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What does *irregular* mean?",
+              "options": [
+                {
+                  "text": "Contrary to rule or accepted order or general practice",
+                  "correct": true
+                },
+                {
+                  "text": "Engaged in",
+                  "correct": false
+                },
+                {
+                  "text": "Belonging to or participated in by a community as a whole; public",
+                  "correct": false
+                },
+                {
+                  "text": "Cut with a saw",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "From the text: “Many common verbs are irregular.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "1 word from Ahmed's weekend story",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 11.156199999999899,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "souvenir",
+            "supportingSentence": "In the afternoon they bought souvenirs at a market.",
+            "data": {
+              "label": "Word of the day",
+              "word": "souvenir",
+              "ipa": "ˌsuvəˈnɪr",
+              "partOfSpeech": "noun",
+              "definition": "Something of sentimental value.",
+              "example": "In the afternoon they bought souvenirs at a market.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about sleep",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 31.897500000000036,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Stress can cause headaches and make it hard to sleep.",
+            "supportingSentence": "Stress can cause headaches and make it hard to sleep.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Stress can cause headaches and make it hard to sleep.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Stress can cause headaches and make it hard to sleep.”"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Walking for thirty minutes a day is a simple habit of exercise.",
+            "supportingSentence": "Walking for thirty minutes a day is a simple form of exercise.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Walking for thirty minutes a day is a simple habit of exercise.",
+              "answer": false,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Walking for thirty minutes a day is a simple form of exercise.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 healthy habits",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 17.915599999999813,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Top 5 key words: Reading: Small changes, big results",
+            "supportingSentence": "habit – something you do often, almost without thinking",
+            "data": {
+              "title": "Top 5 *key words*: Reading: Small changes, big results",
+              "items": [
+                {
+                  "text": "habit",
+                  "detail": "something you do often, almost without thinking"
+                },
+                {
+                  "text": "stress",
+                  "detail": "the relative prominence of a syllable or musical note"
+                },
+                {
+                  "text": "form",
+                  "detail": "create (as an entity)"
+                },
+                {
+                  "text": "patient",
+                  "detail": "enduring trying circumstances with even temper or characterized by such endurance"
+                },
+                {
+                  "text": "important",
+                  "detail": "of great significance or value"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur les articles partitifs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 12.361300000000028,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Après une négation, on _____ de : je ne mange pas de viande.",
+            "supportingSentence": "Après une négation, on utilise de : je ne mange pas de viande.",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "Après une négation, on *_____* de : je ne mange pas de viande.",
+              "options": [
+                {
+                  "text": "précise",
+                  "correct": false
+                },
+                {
+                  "text": "utilise",
+                  "correct": true
+                },
+                {
+                  "text": "quantité",
+                  "correct": false
+                },
+                {
+                  "text": "pain",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « Après une négation, on utilise de : je ne mange pas de viande. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Après une négation, on utilise de : je ne _____ pas de viande.",
+            "supportingSentence": "Après une négation, on utilise de : je ne mange pas de viande.",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "Après une négation, on utilise de : je ne *_____* pas de viande.",
+              "options": [
+                {
+                  "text": "précise",
+                  "correct": false
+                },
+                {
+                  "text": "quantité",
+                  "correct": false
+                },
+                {
+                  "text": "mange",
+                  "correct": true
+                },
+                {
+                  "text": "l'eau",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « Après une négation, on utilise de : je ne mange pas de viande. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "word-of-the-day",
+        "instructions": "2 mots sur le marché",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 4.800700000000234,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "le marché",
+            "supportingSentence": "le marché : un lieu où on achète des produits frais",
+            "data": {
+              "label": "Mot du jour",
+              "word": "le marché",
+              "ipa": "",
+              "partOfSpeech": "",
+              "definition": "Un lieu où on achète des produits frais.",
+              "example": "Au marché, les vendeurs proposent souvent de goûter leurs produits.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "la carotte",
+            "supportingSentence": "la carotte : un légume orange et long",
+            "data": {
+              "label": "Mot du jour",
+              "word": "la carotte",
+              "ipa": "",
+              "partOfSpeech": "",
+              "definition": "Un légume orange et long.",
+              "example": "Elle achète des pommes, des carottes et des tomates.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "true-false",
+        "instructions": "2 vrai ou faux sur la pluie et l'orage",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 61.73459999999977,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "La météo annonce de la chaleur pour l'après-midi.",
+            "supportingSentence": "La météo annonce de la pluie pour l'après-midi.",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "La météo annonce de la chaleur pour l'après-midi.",
+              "answer": false,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": "Le texte dit : « La météo annonce de la pluie pour l'après-midi. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "« le nuage » signifie une masse blanche ou grise dans le ciel.",
+            "supportingSentence": "le nuage : une masse blanche ou grise dans le ciel",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "« le nuage » signifie une masse blanche ou grise dans le ciel.",
+              "answer": true,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": ""
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur le futur proche",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 22.427900000000136,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "On forme le _____ proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le *_____* proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "arriver",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "futur",
+                  "correct": true
+                },
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "On forme le futur proche avec aller au présent et un verbe à _____ : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le futur proche avec aller au présent et un verbe à *_____* : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "l'infinitif",
+                  "correct": true
+                },
+                {
+                  "text": "arriver",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "quiz",
+        "instructions": "2 أسئلة عن المكتبة",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 48.08640000000014,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "بعد الدرس، يذهب أحمد إلى _____ ليقرأ كتابًا.",
+            "supportingSentence": "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "بعد الدرس، يذهب أحمد إلى *_____* ليقرأ كتابًا.",
+              "options": [
+                {
+                  "text": "ويكتبون",
+                  "correct": false
+                },
+                {
+                  "text": "الواجب",
+                  "correct": false
+                },
+                {
+                  "text": "المكتبة",
+                  "correct": true
+                },
+                {
+                  "text": "المساء",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*المكتبة*: مكان فيه كتب كثيرة."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "في المساء، يكتب أحمد _____ ويراجع دروسه.",
+            "supportingSentence": "في المساء، يكتب أحمد الواجب ويراجع دروسه.",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "في المساء، يكتب أحمد *_____* ويراجع دروسه.",
+              "options": [
+                {
+                  "text": "التلاميذ",
+                  "correct": false
+                },
+                {
+                  "text": "الواجب",
+                  "correct": true
+                },
+                {
+                  "text": "الدرس",
+                  "correct": false
+                },
+                {
+                  "text": "المكتبة",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*الواجب*: العمل الذي يقوم به التلميذ في البيت."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "rule-based",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "true-false",
+        "instructions": "2 صح أو خطأ عن أحمد",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 14.757200000000012,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "يذهب أحمد إلى المدرسة كل صباح.",
+            "supportingSentence": "يذهب أحمد إلى المدرسة كل صباح.",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "يذهب أحمد إلى المدرسة كل صباح.",
+              "answer": true,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "يقول النص: «يذهب أحمد إلى المدرسة كل صباح.»"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "في الفصل، يقرأ المدرسة القصص ويكتبون الجمل.",
+            "supportingSentence": "في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "في الفصل، يقرأ المدرسة القصص ويكتبون الجمل.",
+              "answer": false,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "يقول النص: «في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.»"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions about deadlines",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 36288.345,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Today the team must finish the report before the _____.",
+            "supportingSentence": "Today the team must finish the report before the deadline.",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Today the team must finish the report before the *_____*.",
+              "options": [
+                {
+                  "text": "colleague",
+                  "correct": false
+                },
+                {
+                  "text": "productivity",
+                  "correct": false
+                },
+                {
+                  "text": "communication",
+                  "correct": false
+                },
+                {
+                  "text": "deadline",
+                  "correct": true
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*deadline*: the time by which a task must be finished."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "What does colleague mean?",
+            "supportingSentence": "colleague — a person you work with — collègue",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What does *colleague* mean?",
+              "options": [
+                {
+                  "text": "The time by which a task must be finished",
+                  "correct": false
+                },
+                {
+                  "text": "A person you work with",
+                  "correct": true
+                },
+                {
+                  "text": "A written document describing the findings of some individual or group",
+                  "correct": false
+                },
+                {
+                  "text": "An instance or single occasion for some event",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "From the text: “Her colleague Tom often helps her when the work becomes stressful.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about phrasal verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 21521.009399999995,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "The meeting was put off until Friday because the manager was ill.",
+            "supportingSentence": "The meeting was put off until Friday because the manager was ill.",
+            "data": {
+              "label": "True or false?",
+              "statement": "The meeting was put off until Friday because the manager was ill.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says 'The meeting was put off until Friday because the manager was ill.'"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "The meeting was put off until Thursday because the manager was ill.",
+            "supportingSentence": "The meeting was put off until Friday because the manager was ill.",
+            "data": {
+              "label": "True or false?",
+              "statement": "The meeting was put off until Thursday because the manager was ill.",
+              "answer": false,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says the meeting was put off until Friday, not Thursday."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "2 words about luggage and tickets",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 20141.8903,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "ticket",
+            "supportingSentence": "The conductor checked every ticket and helped an old man with his luggage.",
+            "data": {
+              "label": "Word of the day",
+              "word": "ticket",
+              "ipa": "ˈtɪkət",
+              "partOfSpeech": "noun",
+              "definition": "A piece of paper for travel.",
+              "example": "Make sure you have your ticket before boarding.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "luggage",
+            "supportingSentence": "The conductor checked every ticket and helped an old man with his luggage.",
+            "data": {
+              "label": "Word of the day",
+              "word": "luggage",
+              "ipa": "ˈlʌɡədʒ",
+              "partOfSpeech": "noun",
+              "definition": "Travel bags.",
+              "example": "Don't forget to check your luggage at the airport.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 words about the train",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 1,
+        "ms": 47966.9378,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Top 5 key words: Reading: A trip to the coast",
+            "supportingSentence": "platform – the place where you get on a train",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "title": "Top 5 *key words*: Reading: A trip to the coast",
+              "items": [
+                {
+                  "text": "platform",
+                  "detail": "the place where you get on a train"
+                },
+                {
+                  "text": "ticket",
+                  "detail": "a piece of paper that lets you travel"
+                },
+                {
+                  "text": "journey",
+                  "detail": "the act of traveling from one place to another"
+                },
+                {
+                  "text": "train",
+                  "detail": "public transport provided by a line of railway cars coupled together and drawn by a…"
+                },
+                {
+                  "text": "coast",
+                  "detail": "the shore of a sea or ocean"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 questions on countable and uncountable nouns",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 41112.6287,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 2,
+          "posChecked": 5,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "We say \"a few carrots\" but _____ salt.",
+            "supportingSentence": "We say \"a few carrots\" but \"a little salt\".",
+            "data": {
+              "label": "Fill the gap",
+              "question": "We say \"a few carrots\" but *_____* salt.",
+              "options": [
+                {
+                  "text": "a little",
+                  "correct": true
+                },
+                {
+                  "text": "a few",
+                  "correct": false
+                },
+                {
+                  "text": "a lot",
+                  "correct": false
+                },
+                {
+                  "text": "a lot of",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The text states that we say 'a few carrots' but 'a little salt'."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "We use \"much\" with uncountable nouns in questions: How much _____ do we need?",
+            "supportingSentence": "We use \"much\" with uncountable nouns in questions: How much salt do we need?",
+            "data": {
+              "label": "Fill the gap",
+              "question": "We use \"much\" with uncountable nouns in questions: How much *_____* do we need?",
+              "options": [
+                {
+                  "text": "salt",
+                  "correct": true
+                },
+                {
+                  "text": "carrots",
+                  "correct": false
+                },
+                {
+                  "text": "rice",
+                  "correct": false
+                },
+                {
+                  "text": "water",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The text states that we use 'much' with uncountable nouns in questions like 'How much salt do we need?'"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about Maria's shopping",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 21949.141600000003,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Maria wants to cook a vegetable soup for her friends on Saturday.",
+            "supportingSentence": "Maria wants to cook a vegetable soup for her friends on Saturday.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Maria wants to cook a vegetable soup for her friends on Saturday.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says 'Maria wants to cook a vegetable soup for her friends on Saturday.'"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "She finds a simple recipe in an old cookbook.",
+            "supportingSentence": "She finds a simple recipe in an old cookbook.",
+            "data": {
+              "label": "True or false?",
+              "statement": "She finds a simple recipe in an old cookbook.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says 'She finds a simple recipe in an old cookbook.'"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions on irregular verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 32802.683699999994,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 4,
+          "posChecked": 6,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Many common verbs are _____.",
+            "supportingSentence": "Many common verbs are irregular.",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Many common verbs are *_____*.",
+              "options": [
+                {
+                  "text": "regular",
+                  "correct": false
+                },
+                {
+                  "text": "irregular",
+                  "correct": true
+                },
+                {
+                  "text": "past",
+                  "correct": false
+                },
+                {
+                  "text": "present",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The text states that many common verbs are irregular."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "Many common verbs are _____.",
+            "supportingSentence": "Many common verbs are irregular.",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Many common verbs are *_____*.",
+              "options": [
+                {
+                  "text": "regular",
+                  "correct": false
+                },
+                {
+                  "text": "irregular",
+                  "correct": true
+                },
+                {
+                  "text": "flexible",
+                  "correct": false
+                },
+                {
+                  "text": "flexed",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The text states that many common verbs are irregular."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "1 word from Ahmed's weekend story",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 12594.27979999999,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "souvenirs",
+            "supportingSentence": "In the afternoon they bought souvenirs at a market.",
+            "data": {
+              "label": "Word of the day",
+              "word": "souvenirs",
+              "ipa": "ˌsuvəˈnɪrz",
+              "partOfSpeech": "noun",
+              "definition": "Things bought on a trip as memories.",
+              "example": "They bought souvenirs to remember their trip.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about sleep",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 26699.11949999997,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Adults should sleep 7 hours every night.",
+            "supportingSentence": "Doctors say that adults should sleep seven to nine hours every night.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Adults should sleep 7 hours every night.",
+              "answer": false,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says adults should sleep seven to nine hours every night, not exactly seven hours."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "Adults should sleep 8 hours every night.",
+            "supportingSentence": "Doctors say that adults should sleep seven to nine hours every night.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Adults should sleep 8 hours every night.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says adults should sleep seven to nine hours every night, which is close to 8 hours."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 healthy habits",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 1,
+        "ms": 28238.05970000004,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Top 5 key words: Reading: Small changes, big results",
+            "supportingSentence": "habit – something you do often, almost without thinking",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "title": "Top 5 *key words*: Reading: Small changes, big results",
+              "items": [
+                {
+                  "text": "habit",
+                  "detail": "something you do often, almost without thinking"
+                },
+                {
+                  "text": "stress",
+                  "detail": "the relative prominence of a syllable or musical note"
+                },
+                {
+                  "text": "form",
+                  "detail": "create (as an entity)"
+                },
+                {
+                  "text": "patient",
+                  "detail": "enduring trying circumstances with even temper or characterized by such endurance"
+                },
+                {
+                  "text": "important",
+                  "detail": "of great significance or value"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur les articles partitifs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 1,
+        "fallback": 1,
+        "ms": 68121.4974,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 3,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Quelle quantité de viande mange-t-on ?",
+            "supportingSentence": "Je ne mange pas de viande.",
+            "data": {
+              "label": "Quiz express",
+              "question": "Quelle quantité de viande mange-t-on ?",
+              "options": [
+                {
+                  "text": "du",
+                  "correct": false
+                },
+                {
+                  "text": "de la",
+                  "correct": false
+                },
+                {
+                  "text": "de la viande",
+                  "correct": true
+                },
+                {
+                  "text": "de la des",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "La phrase dit que l'on utilise de après une négation."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Après une négation, on _____ de : je ne mange pas de viande.",
+            "supportingSentence": "Après une négation, on utilise de : je ne mange pas de viande.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "Après une négation, on *_____* de : je ne mange pas de viande.",
+              "options": [
+                {
+                  "text": "précise",
+                  "correct": false
+                },
+                {
+                  "text": "utilise",
+                  "correct": true
+                },
+                {
+                  "text": "quantité",
+                  "correct": false
+                },
+                {
+                  "text": "pain",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « Après une négation, on utilise de : je ne mange pas de viande. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "word-of-the-day",
+        "instructions": "2 mots sur le marché",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 35375.19949999999,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "marché",
+            "supportingSentence": "Chaque samedi, Marie va au marché avec sa grand-mère.",
+            "data": {
+              "label": "Mot du jour",
+              "word": "marché",
+              "ipa": "",
+              "partOfSpeech": "noun",
+              "definition": "Place pour acheter des aliments frais.",
+              "example": "Marie achète des légumes au marché.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "marché",
+            "supportingSentence": "Chaque samedi, Marie va au marché avec sa grand-mère.",
+            "data": {
+              "label": "Mot du jour",
+              "word": "marché",
+              "ipa": "",
+              "partOfSpeech": "noun",
+              "definition": "Place où l'on achète des aliments frais.",
+              "example": "Le marché est plein de monde le samedi matin.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "true-false",
+        "instructions": "2 vrai ou faux sur la pluie et l'orage",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 27613.14069999999,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Il y aura de la pluie ce midi.",
+            "supportingSentence": "La météo annonce de la pluie pour l'après-midi.",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "Il y aura de la pluie ce midi.",
+              "answer": false,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": "La météo dit qu'il y aura de la pluie pour l'après-midi, pas ce midi."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "Il y aura de la pluie ce soir.",
+            "supportingSentence": "La météo annonce de la pluie pour l'après-midi.",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "Il y aura de la pluie ce soir.",
+              "answer": false,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": "La météo dit qu'il y aura de la pluie pour l'après-midi, pas ce soir."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur le futur proche",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 40782.98379999999,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "On forme le _____ proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le *_____* proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "arriver",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "futur",
+                  "correct": true
+                },
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "On forme le futur proche avec aller au présent et un verbe à _____ : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le futur proche avec aller au présent et un verbe à *_____* : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "l'infinitif",
+                  "correct": true
+                },
+                {
+                  "text": "arriver",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "quiz",
+        "instructions": "2 أسئلة عن المكتبة",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 1,
+        "fallback": 1,
+        "ms": 36392.09710000001,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 3,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "بعد الدرس، يذهب _____ إلى المكتبة ليقرأ كتابًا.",
+            "supportingSentence": "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "بعد الدرس، يذهب *_____* إلى المكتبة ليقرأ كتابًا.",
+              "options": [
+                {
+                  "text": "أحمد",
+                  "correct": true
+                },
+                {
+                  "text": "أبويه",
+                  "correct": false
+                },
+                {
+                  "text": "أخته",
+                  "correct": false
+                },
+                {
+                  "text": "أمي",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "ال supporting_sentence تقول أن أحمد هو من يذهب إلى المكتبة بعد الدرس."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "بعد الدرس، يذهب أحمد إلى _____ ليقرأ كتابًا.",
+            "supportingSentence": "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "بعد الدرس، يذهب أحمد إلى *_____* ليقرأ كتابًا.",
+              "options": [
+                {
+                  "text": "ويكتبون",
+                  "correct": false
+                },
+                {
+                  "text": "الواجب",
+                  "correct": false
+                },
+                {
+                  "text": "المكتبة",
+                  "correct": true
+                },
+                {
+                  "text": "المساء",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*المكتبة*: مكان فيه كتب كثيرة."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:3b",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "true-false",
+        "instructions": "2 صح أو خطأ عن أحمد",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 41152.337,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "أحمد يذهب إلى المدرسة كل صباح.",
+            "supportingSentence": "يذهب أحمد إلى المدرسة كل صباح.",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "أحمد يذهب إلى المدرسة كل صباح.",
+              "answer": true,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "النص يذكر أن أحمد يذهب إلى المدرسة كل صباح، وهذا صحيح."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "أحمد يحب معلم اللغة العربية كثيرًا.",
+            "supportingSentence": "يحب أحمد معلم اللغة العربية كثيرًا.",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "أحمد يحب معلم اللغة العربية كثيرًا.",
+              "answer": false,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "النص يذكر أن أحمد يحب معلم اللغة العربية، لكن النقطة المختارة تقول إنه يحب معلم اللغة العربية كثيرًا، وهذا غير صحيح."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions about deadlines",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 1,
+        "ms": 35436.30859999999,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 3,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "What is the purpose of good communication according to the passage?",
+            "supportingSentence": "Good communication helps a team to meet its deadlines.",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What is the purpose of good communication according to the passage?",
+              "options": [
+                {
+                  "text": "to finish the report",
+                  "correct": false
+                },
+                {
+                  "text": "to meet deadlines",
+                  "correct": true
+                },
+                {
+                  "text": "to work with colleagues",
+                  "correct": false
+                },
+                {
+                  "text": "to congratulate",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The passage says that good communication helps a team to meet its deadlines, so the correct answer is 'to meet deadlines'."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Today the team must finish the report before the _____.",
+            "supportingSentence": "Today the team must finish the report before the deadline.",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Today the team must finish the report before the *_____*.",
+              "options": [
+                {
+                  "text": "colleague",
+                  "correct": false
+                },
+                {
+                  "text": "productivity",
+                  "correct": false
+                },
+                {
+                  "text": "communication",
+                  "correct": false
+                },
+                {
+                  "text": "deadline",
+                  "correct": true
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*deadline*: the time by which a task must be finished."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about phrasal verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 1,
+        "ms": 28138.195099999895,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "The meeting was put off until Friday because the manager was ill.",
+            "supportingSentence": "The meeting was put off until Friday because the manager was ill.",
+            "data": {
+              "label": "True or false?",
+              "statement": "The meeting was put off until Friday because the manager was ill.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The passage states that the meeting was put off because the manager was ill, which is the same as the statement."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Tom filled in for Sarah while she was on holiday.",
+            "supportingSentence": "Tom filled in for Sarah while she was on holiday.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "True or false?",
+              "statement": "Tom filled in for Sarah while she was on holiday.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Tom filled in for Sarah while she was on holiday.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "2 words about luggage and tickets",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 22912.50780000002,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "ticket",
+            "supportingSentence": "A return ticket, please.",
+            "data": {
+              "label": "Word of the day",
+              "word": "ticket",
+              "ipa": "ˈtɪkət",
+              "partOfSpeech": "noun",
+              "definition": "A piece of paper that lets you travel.",
+              "example": "Please show me your ticket.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "ticket",
+            "supportingSentence": "The conductor checked every ticket and helped an old man with his luggage.",
+            "data": {
+              "label": "Word of the day",
+              "word": "ticket",
+              "ipa": "ˈtɪkət",
+              "partOfSpeech": "noun",
+              "definition": "A piece of paper that allows you to travel.",
+              "example": "We usually buy a ticket at the station before the journey.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 words about the train",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 15686.150999999954,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "train",
+            "supportingSentence": "platform – the place where you get on a train",
+            "data": {
+              "title": "*train*",
+              "items": [
+                {
+                  "text": "platform",
+                  "detail": "the place where you get on a train"
+                },
+                {
+                  "text": "train",
+                  "detail": "leaves from platform three at nine o'clock"
+                },
+                {
+                  "text": "return ticket",
+                  "detail": "please"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 questions on countable and uncountable nouns",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 24866.62819999992,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "What are countable nouns?",
+            "supportingSentence": "We can count carrots and onions, so they are countable nouns.",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What are countable nouns?",
+              "options": [
+                {
+                  "text": "carrots and onions",
+                  "correct": true
+                },
+                {
+                  "text": "apples and oranges",
+                  "correct": false
+                },
+                {
+                  "text": "trees and flowers",
+                  "correct": false
+                },
+                {
+                  "text": "dogs and cats",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The passage states that we can count carrots and onions, which are countable nouns."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "What are uncountable nouns?",
+            "supportingSentence": "Salt, rice and water are uncountable nouns.",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What are uncountable nouns?",
+              "options": [
+                {
+                  "text": "salt, rice, water",
+                  "correct": true
+                },
+                {
+                  "text": "carrots, onions",
+                  "correct": false
+                },
+                {
+                  "text": "apples, oranges",
+                  "correct": false
+                },
+                {
+                  "text": "trees, flowers",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The passage mentions that salt, rice, and water are uncountable nouns."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about Maria's shopping",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 16263.69180000003,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Maria writes a shopping list so she does not forget any ingredient.",
+            "supportingSentence": "She writes a shopping list so she does not forget any ingredient.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Maria writes a shopping list so she does not forget any ingredient.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The passage states that Maria writes a shopping list to avoid forgetting ingredients, which is consistent with the statement."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "Maria finds a simple recipe in an old cookbook.",
+            "supportingSentence": "The cashier gives Maria a receipt, and she puts it in her purse.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Maria finds a simple recipe in an old cookbook.",
+              "answer": false,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The passage mentions that Maria finds a simple recipe in an old cookbook, but the statement is about finding a recipe in a cookbook, which is not mentioned in the passage."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions on irregular verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 47148.022,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 6,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "What is true about irregular verbs?",
+            "supportingSentence": "Many common verbs are irregular.",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What is true about irregular verbs?",
+              "options": [
+                {
+                  "text": "Irregular verbs are verbs that change their form in the past tense.",
+                  "correct": true
+                },
+                {
+                  "text": "Irregular verbs are verbs that change their form in the present tense.",
+                  "correct": false
+                },
+                {
+                  "text": "Irregular verbs are verbs that change their form in the past perfect tense.",
+                  "correct": false
+                },
+                {
+                  "text": "Irregular verbs are verbs that do not change their form in the past tense.",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The passage states that many common verbs are irregular, meaning they do not change their form in the past tense."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "What is true about irregular verbs?",
+            "supportingSentence": "Many common verbs are irregular.",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What is true about irregular verbs?",
+              "options": [
+                {
+                  "text": "Many common verbs are irregular.",
+                  "correct": true
+                },
+                {
+                  "text": "Regular verbs add -ed.",
+                  "correct": false
+                },
+                {
+                  "text": "In questions we use did and the base verb.",
+                  "correct": false
+                },
+                {
+                  "text": "In negative sentences we use did not and the base verb.",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "The passage states that many common verbs are irregular, which is the correct answer."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "1 word from Ahmed's weekend story",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 10913.601399999927,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "arrived",
+            "supportingSentence": "They took the train on Friday evening and arrived at ten o'clock.",
+            "data": {
+              "label": "Word of the day",
+              "word": "arrived",
+              "ipa": "ɚˈaɪvd",
+              "partOfSpeech": "verb",
+              "definition": "To move to a place or to a state of being.",
+              "example": "They arrived at the airport.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about sleep",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 1,
+        "ms": 28695.80429999996,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Stress can cause headaches and make it hard to sleep.",
+            "supportingSentence": "Stress can cause headaches and make it hard to sleep.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Stress can cause headaches and make it hard to sleep.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The passage states that stress can cause headaches and make it hard to sleep."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Stress can cause headaches and make it hard to sleep.",
+            "supportingSentence": "Stress can cause headaches and make it hard to sleep.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "True or false?",
+              "statement": "Stress can cause headaches and make it hard to sleep.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Stress can cause headaches and make it hard to sleep.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 healthy habits",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 1,
+        "ms": 30007.72710000002,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Top 5 key words: Reading: Small changes, big results",
+            "supportingSentence": "habit – something you do often, almost without thinking",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "title": "Top 5 *key words*: Reading: Small changes, big results",
+              "items": [
+                {
+                  "text": "habit",
+                  "detail": "something you do often, almost without thinking"
+                },
+                {
+                  "text": "stress",
+                  "detail": "the relative prominence of a syllable or musical note"
+                },
+                {
+                  "text": "form",
+                  "detail": "create (as an entity)"
+                },
+                {
+                  "text": "patient",
+                  "detail": "enduring trying circumstances with even temper or characterized by such endurance"
+                },
+                {
+                  "text": "important",
+                  "detail": "of great significance or value"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur les articles partitifs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 4,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 69325.16890000005,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Après une négation, on _____ de : je ne mange pas de viande.",
+            "supportingSentence": "Après une négation, on utilise de : je ne mange pas de viande.",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "Après une négation, on *_____* de : je ne mange pas de viande.",
+              "options": [
+                {
+                  "text": "précise",
+                  "correct": false
+                },
+                {
+                  "text": "utilise",
+                  "correct": true
+                },
+                {
+                  "text": "quantité",
+                  "correct": false
+                },
+                {
+                  "text": "pain",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « Après une négation, on utilise de : je ne mange pas de viande. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Après une négation, on utilise de : je ne _____ pas de viande.",
+            "supportingSentence": "Après une négation, on utilise de : je ne mange pas de viande.",
+            "fallbackReason": "invalid",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "Après une négation, on utilise de : je ne *_____* pas de viande.",
+              "options": [
+                {
+                  "text": "précise",
+                  "correct": false
+                },
+                {
+                  "text": "quantité",
+                  "correct": false
+                },
+                {
+                  "text": "mange",
+                  "correct": true
+                },
+                {
+                  "text": "l'eau",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « Après une négation, on utilise de : je ne mange pas de viande. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "word-of-the-day",
+        "instructions": "2 mots sur le marché",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 4,
+        "returnedRaw": 4,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 45814.39269999997,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "marché",
+            "supportingSentence": "Chaque samedi, Marie va au marché avec sa grand-mère.",
+            "data": {
+              "label": "Mot du jour",
+              "word": "marché",
+              "ipa": "",
+              "partOfSpeech": "noun",
+              "definition": "A place where goods are sold.",
+              "example": "Le marché est un endroit où les gens achètent des produits frais.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "goûter",
+            "supportingSentence": "Au marché, les vendeurs proposent souvent de goûter leurs produits.",
+            "data": {
+              "label": "Mot du jour",
+              "word": "goûter",
+              "ipa": "",
+              "partOfSpeech": "verb",
+              "definition": "To try or sample something.",
+              "example": "Les vendeurs proposent souvent de goûter leurs produits.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "true-false",
+        "instructions": "2 vrai ou faux sur la pluie et l'orage",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 1,
+        "ms": 27904.19709999999,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Le soir, un orage éclate et la ville est sous l'eau.",
+            "supportingSentence": "Le soir, un orage éclate et la ville est sous l'eau.",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "Le soir, un orage éclate et la ville est sous l'eau.",
+              "answer": true,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": "Le passage dit clairement que le soir, un orage éclate et la ville est sous l'eau."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "La météo annonce de la chaleur pour l'après-midi.",
+            "supportingSentence": "La météo annonce de la pluie pour l'après-midi.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "La météo annonce de la chaleur pour l'après-midi.",
+              "answer": false,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": "Le texte dit : « La météo annonce de la pluie pour l'après-midi. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur le futur proche",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 1,
+        "returnedRaw": 4,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 59163.85140000004,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "On forme le _____ proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le *_____* proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "arriver",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "futur",
+                  "correct": true
+                },
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "On forme le futur proche avec aller au présent et un verbe à _____ : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le futur proche avec aller au présent et un verbe à *_____* : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "l'infinitif",
+                  "correct": true
+                },
+                {
+                  "text": "arriver",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "quiz",
+        "instructions": "2 أسئلة عن المكتبة",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 4,
+        "returnedRaw": 4,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 44475.24100000004,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "بعد الدرس، يذهب أحمد إلى _____ ليقرأ كتابًا.",
+            "supportingSentence": "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "بعد الدرس، يذهب أحمد إلى *_____* ليقرأ كتابًا.",
+              "options": [
+                {
+                  "text": "ويكتبون",
+                  "correct": false
+                },
+                {
+                  "text": "الواجب",
+                  "correct": false
+                },
+                {
+                  "text": "المكتبة",
+                  "correct": true
+                },
+                {
+                  "text": "المساء",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*المكتبة*: مكان فيه كتب كثيرة."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "في المساء، يكتب أحمد _____ ويراجع دروسه.",
+            "supportingSentence": "في المساء، يكتب أحمد الواجب ويراجع دروسه.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "في المساء، يكتب أحمد *_____* ويراجع دروسه.",
+              "options": [
+                {
+                  "text": "التلاميذ",
+                  "correct": false
+                },
+                {
+                  "text": "الواجب",
+                  "correct": true
+                },
+                {
+                  "text": "الدرس",
+                  "correct": false
+                },
+                {
+                  "text": "المكتبة",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*الواجب*: العمل الذي يقوم به التلميذ في البيت."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "qwen2.5:1.5b",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "true-false",
+        "instructions": "2 صح أو خطأ عن أحمد",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 4,
+        "returnedRaw": 4,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 27962.66599999997,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "يذهب أحمد إلى المدرسة كل صباح.",
+            "supportingSentence": "يذهب أحمد إلى المدرسة كل صباح.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "يذهب أحمد إلى المدرسة كل صباح.",
+              "answer": true,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "يقول النص: «يذهب أحمد إلى المدرسة كل صباح.»"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "في الفصل، يقرأ المدرسة القصص ويكتبون الجمل.",
+            "supportingSentence": "في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "في الفصل، يقرأ المدرسة القصص ويكتبون الجمل.",
+              "answer": false,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "يقول النص: «في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.»"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions about deadlines",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 22294.773900000146,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Today the team must finish the report before the _____.",
+            "supportingSentence": "Today the team must finish the report before the deadline.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Today the team must finish the report before the *_____*.",
+              "options": [
+                {
+                  "text": "colleague",
+                  "correct": false
+                },
+                {
+                  "text": "productivity",
+                  "correct": false
+                },
+                {
+                  "text": "communication",
+                  "correct": false
+                },
+                {
+                  "text": "deadline",
+                  "correct": true
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*deadline*: the time by which a task must be finished."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "What does colleague mean?",
+            "supportingSentence": "colleague — a person you work with — collègue",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What does *colleague* mean?",
+              "options": [
+                {
+                  "text": "The time by which a task must be finished",
+                  "correct": false
+                },
+                {
+                  "text": "A person you work with",
+                  "correct": true
+                },
+                {
+                  "text": "A written document describing the findings of some individual or group",
+                  "correct": false
+                },
+                {
+                  "text": "An instance or single occasion for some event",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "From the text: “Her colleague Tom often helps her when the work becomes stressful.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-office.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about phrasal verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 19327.02829999989,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "The meeting was put off until Friday because the manager was ill.",
+            "supportingSentence": "The meeting was put off until Friday because the manager was ill.",
+            "data": {
+              "label": "True or false?",
+              "statement": "The meeting was put off until Friday because the manager was ill.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says the meeting was put off because the manager was ill, not because it was cancelled."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "The meeting was put off until Friday because the manager was ill.",
+            "supportingSentence": "The meeting was put off until Friday because the manager was ill.",
+            "data": {
+              "label": "True or false?",
+              "statement": "The meeting was put off until Friday because the manager was ill.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says the meeting was put off because the manager was ill, not that the manager was ill."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "2 words about luggage and tickets",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 2,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 15705.616200000048,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "luggage",
+            "supportingSentence": "The conductor checked every ticket and helped an old man with his luggage.",
+            "data": {
+              "label": "Word of the day",
+              "word": "luggage",
+              "ipa": "ˈlʌɡədʒ",
+              "partOfSpeech": "noun",
+              "definition": "The bags you take on a journey.",
+              "example": "The old man's luggage was heavy and he needed help.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "return",
+            "supportingSentence": "A return ticket, please.",
+            "data": {
+              "label": "Word of the day",
+              "word": "return",
+              "ipa": "rɪˈtɝn",
+              "partOfSpeech": "adjective",
+              "definition": "Coming back to the same place.",
+              "example": "The return ticket to Paris was cheaper than the one to New York.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-travel.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 words about the train",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 26570.321800000034,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Top 5 train words",
+            "supportingSentence": "The train leaves from platform three at nine o'clock.",
+            "data": {
+              "title": "Top 5 *train words*",
+              "items": [
+                {
+                  "text": "platform",
+                  "detail": "where you get on the train"
+                },
+                {
+                  "text": "train",
+                  "detail": "the vehicle that takes you to your destination"
+                },
+                {
+                  "text": "three",
+                  "detail": "the number of platforms available"
+                },
+                {
+                  "text": "o'clock",
+                  "detail": "the time the train departs"
+                },
+                {
+                  "text": "seat",
+                  "detail": "the space you occupy on the train"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 questions on countable and uncountable nouns",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 25164.29159999988,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Salt, rice and water are uncountable _____.",
+            "supportingSentence": "Salt, rice and water are uncountable nouns.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Fill the gap",
+              "question": "Salt, rice and water are uncountable *_____*.",
+              "options": [
+                {
+                  "text": "carrots",
+                  "correct": false
+                },
+                {
+                  "text": "nouns",
+                  "correct": true
+                },
+                {
+                  "text": "onions",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*noun*: a content word that can be used to refer to a person, place, thing, quality, or action."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "What does carrot mean?",
+            "supportingSentence": "We can count carrots and onions, so they are countable nouns.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What does *carrot* mean?",
+              "options": [
+                {
+                  "text": "The bulb of an onion plant",
+                  "correct": false
+                },
+                {
+                  "text": "Deep orange edible root of the cultivated carrot plant",
+                  "correct": true
+                },
+                {
+                  "text": "Grains used as food either unpolished or more often polished",
+                  "correct": false
+                },
+                {
+                  "text": "A content word that can be used to refer to a person, place, thing, quality",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "From the text: “We can count carrots and onions, so they are countable nouns.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-food.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about Maria's shopping",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 14724.414600000018,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "She writes a shopping list so she does not forget any ingredient.",
+            "supportingSentence": "She writes a shopping list so she does not forget any ingredient.",
+            "data": {
+              "label": "True or false?",
+              "statement": "She writes a shopping list so she does not forget any ingredient.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says she writes a shopping list to remember what she needs."
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "She writes a shopping list so she does not forget any ingredient.",
+            "supportingSentence": "She writes a shopping list so she does not forget any ingredient.",
+            "data": {
+              "label": "True or false?",
+              "statement": "She writes a shopping list so she does not forget any ingredient.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says she writes a shopping list so she does not forget any ingredient."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "quiz",
+        "instructions": "2 quiz questions on irregular verbs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 25392.962899999926,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "In negative sentences we use did not and the base _____: She did not go to school yesterday.",
+            "supportingSentence": "In negative sentences we use did not and the base verb: She did not go to school yesterday.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Fill the gap",
+              "question": "In negative sentences we use did not and the base *_____*: She did not go to school yesterday.",
+              "options": [
+                {
+                  "text": "played",
+                  "correct": false
+                },
+                {
+                  "text": "verb",
+                  "correct": true
+                },
+                {
+                  "text": "worked",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*verb*: the word class that serves as the predicate of a sentence."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "What does irregular mean?",
+            "supportingSentence": "Many common verbs are irregular.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Quick quiz",
+              "question": "What does *irregular* mean?",
+              "options": [
+                {
+                  "text": "Contrary to rule or accepted order or general practice",
+                  "correct": true
+                },
+                {
+                  "text": "Engaged in",
+                  "correct": false
+                },
+                {
+                  "text": "Belonging to or participated in by a community as a whole; public",
+                  "correct": false
+                },
+                {
+                  "text": "Cut with a saw",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "From the text: “Many common verbs are irregular.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-past-simple.md",
+        "lang": "en",
+        "formatId": "word-of-the-day",
+        "instructions": "1 word from Ahmed's weekend story",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 1,
+        "returnedRaw": 1,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 0,
+        "ms": 8256.906700000167,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Sunday",
+            "supportingSentence": "They went home on Sunday night, tired but happy.",
+            "data": {
+              "label": "Word of the day",
+              "word": "Sunday",
+              "ipa": "ˈsʌnˌdeɪ",
+              "partOfSpeech": "adjective",
+              "definition": "A day of the week.",
+              "example": "They went home on Sunday night, tired but happy.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "true-false",
+        "instructions": "2 true or false statements about sleep",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 1,
+        "fallback": 1,
+        "ms": 22143.48820000002,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "Stress can cause headaches and make it hard to sleep.",
+            "supportingSentence": "Stress can cause headaches and make it hard to sleep.",
+            "data": {
+              "label": "True or false?",
+              "statement": "Stress can cause headaches and make it hard to sleep.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says stress can cause headaches and make it hard to sleep."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Stress can cause headaches and make it hard to sleep.",
+            "supportingSentence": "Stress can cause headaches and make it hard to sleep.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "True or false?",
+              "statement": "Stress can cause headaches and make it hard to sleep.",
+              "answer": true,
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "pace": "standard",
+              "explanation": "The text says: “Stress can cause headaches and make it hard to sleep.”"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "en-health.md",
+        "lang": "en",
+        "formatId": "top5",
+        "instructions": "top 5 healthy habits",
+        "requested": 1,
+        "delivered": 1,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 1,
+        "ms": 28678.80660000001,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Top 5 key words: Reading: Small changes, big results",
+            "supportingSentence": "habit – something you do often, almost without thinking",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "title": "Top 5 *key words*: Reading: Small changes, big results",
+              "items": [
+                {
+                  "text": "habit",
+                  "detail": "something you do often, almost without thinking"
+                },
+                {
+                  "text": "stress",
+                  "detail": "the relative prominence of a syllable or musical note"
+                },
+                {
+                  "text": "form",
+                  "detail": "create (as an entity)"
+                },
+                {
+                  "text": "patient",
+                  "detail": "enduring trying circumstances with even temper or characterized by such endurance"
+                },
+                {
+                  "text": "important",
+                  "detail": "of great significance or value"
+                }
+              ],
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur les articles partitifs",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 33310.74500000011,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "Après une négation, on _____ de : je ne mange pas de viande.",
+            "supportingSentence": "Après une négation, on utilise de : je ne mange pas de viande.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "Après une négation, on *_____* de : je ne mange pas de viande.",
+              "options": [
+                {
+                  "text": "précise",
+                  "correct": false
+                },
+                {
+                  "text": "utilise",
+                  "correct": true
+                },
+                {
+                  "text": "quantité",
+                  "correct": false
+                },
+                {
+                  "text": "pain",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « Après une négation, on utilise de : je ne mange pas de viande. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "Après une négation, on utilise de : je ne _____ pas de viande.",
+            "supportingSentence": "Après une négation, on utilise de : je ne mange pas de viande.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "Après une négation, on utilise de : je ne *_____* pas de viande.",
+              "options": [
+                {
+                  "text": "précise",
+                  "correct": false
+                },
+                {
+                  "text": "quantité",
+                  "correct": false
+                },
+                {
+                  "text": "mange",
+                  "correct": true
+                },
+                {
+                  "text": "l'eau",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « Après une négation, on utilise de : je ne mange pas de viande. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "fr-marche.md",
+        "lang": "fr",
+        "formatId": "word-of-the-day",
+        "instructions": "2 mots sur le marché",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 3,
+        "returnedRaw": 3,
+        "groundedFirst": 1,
+        "groundedAfterRetry": 2,
+        "fallback": 0,
+        "ms": 24902.81690000021,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "llm",
+            "summary": "samedi",
+            "supportingSentence": "Chaque samedi, Marie va au marché avec sa grand-mère.",
+            "data": {
+              "label": "Mot du jour",
+              "word": "samedi",
+              "ipa": "",
+              "partOfSpeech": "adjective",
+              "definition": "A day of the week.",
+              "example": "Marie va au marché le samedi.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          },
+          {
+            "origin": "llm",
+            "summary": "grand-mère",
+            "supportingSentence": "Chaque samedi, Marie va au marché avec sa grand-mère.",
+            "data": {
+              "label": "Mot du jour",
+              "word": "grand-mère",
+              "ipa": "",
+              "partOfSpeech": "noun",
+              "definition": "A person's mother or father.",
+              "example": "Marie va au marché avec sa grand-mère chaque samedi.",
+              "translation": "",
+              "highlight": true,
+              "pace": "standard"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "true-false",
+        "instructions": "2 vrai ou faux sur la pluie et l'orage",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 20042.040400000056,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "La météo annonce de la chaleur pour l'après-midi.",
+            "supportingSentence": "La météo annonce de la pluie pour l'après-midi.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "La météo annonce de la chaleur pour l'après-midi.",
+              "answer": false,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": "Le texte dit : « La météo annonce de la pluie pour l'après-midi. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "« le nuage » signifie une masse blanche ou grise dans le ciel.",
+            "supportingSentence": "le nuage : une masse blanche ou grise dans le ciel",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Vrai ou faux ?",
+              "statement": "« le nuage » signifie une masse blanche ou grise dans le ciel.",
+              "answer": true,
+              "trueLabel": "Vrai",
+              "falseLabel": "Faux",
+              "pace": "standard",
+              "explanation": ""
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "fr-meteo.md",
+        "lang": "fr",
+        "formatId": "quiz",
+        "instructions": "2 questions sur le futur proche",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 30852.937600000063,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "On forme le _____ proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le *_____* proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "arriver",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "futur",
+                  "correct": true
+                },
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "On forme le futur proche avec aller au présent et un verbe à _____ : il va pleuvoir.",
+            "supportingSentence": "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "Complète la phrase",
+              "question": "On forme le futur proche avec aller au présent et un verbe à *_____* : il va pleuvoir.",
+              "options": [
+                {
+                  "text": "l'utilise",
+                  "correct": false
+                },
+                {
+                  "text": "bientôt",
+                  "correct": false
+                },
+                {
+                  "text": "l'infinitif",
+                  "correct": true
+                },
+                {
+                  "text": "arriver",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "D’après le texte : « On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir. »"
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "quiz",
+        "instructions": "2 أسئلة عن المكتبة",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 25778.495199999772,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "بعد الدرس، يذهب أحمد إلى _____ ليقرأ كتابًا.",
+            "supportingSentence": "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "بعد الدرس، يذهب أحمد إلى *_____* ليقرأ كتابًا.",
+              "options": [
+                {
+                  "text": "ويكتبون",
+                  "correct": false
+                },
+                {
+                  "text": "الواجب",
+                  "correct": false
+                },
+                {
+                  "text": "المكتبة",
+                  "correct": true
+                },
+                {
+                  "text": "المساء",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*المكتبة*: مكان فيه كتب كثيرة."
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "في المساء، يكتب أحمد _____ ويراجع دروسه.",
+            "supportingSentence": "في المساء، يكتب أحمد الواجب ويراجع دروسه.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "أكمل الفراغ",
+              "question": "في المساء، يكتب أحمد *_____* ويراجع دروسه.",
+              "options": [
+                {
+                  "text": "التلاميذ",
+                  "correct": false
+                },
+                {
+                  "text": "الواجب",
+                  "correct": true
+                },
+                {
+                  "text": "الدرس",
+                  "correct": false
+                },
+                {
+                  "text": "المكتبة",
+                  "correct": false
+                }
+              ],
+              "pace": "standard",
+              "explanation": "*الواجب*: العمل الذي يقوم به التلميذ في البيت."
+            }
+          }
+        ]
+      },
+      {
+        "generator": "llama3.2:1b",
+        "doc": "ar-school.md",
+        "lang": "ar",
+        "formatId": "true-false",
+        "instructions": "2 صح أو خطأ عن أحمد",
+        "requested": 2,
+        "delivered": 2,
+        "schemaValid": 2,
+        "returnedRaw": 2,
+        "groundedFirst": 0,
+        "groundedAfterRetry": 0,
+        "fallback": 2,
+        "ms": 18011.322899999795,
+        "unavailable": false,
+        "distractors": {
+          "distractors": 0,
+          "posMatch": 0,
+          "posChecked": 0,
+          "duplicates": 0
+        },
+        "items": [
+          {
+            "origin": "rules",
+            "summary": "يذهب أحمد إلى المدرسة كل صباح.",
+            "supportingSentence": "يذهب أحمد إلى المدرسة كل صباح.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "يذهب أحمد إلى المدرسة كل صباح.",
+              "answer": true,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "يقول النص: «يذهب أحمد إلى المدرسة كل صباح.»"
+            }
+          },
+          {
+            "origin": "rules",
+            "summary": "في الفصل، يقرأ المدرسة القصص ويكتبون الجمل.",
+            "supportingSentence": "في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.",
+            "fallbackReason": "ungrounded",
+            "data": {
+              "label": "صح أم خطأ؟",
+              "statement": "في الفصل، يقرأ المدرسة القصص ويكتبون الجمل.",
+              "answer": false,
+              "trueLabel": "صح",
+              "falseLabel": "خطأ",
+              "pace": "standard",
+              "explanation": "يقول النص: «في الفصل، يقرأ التلاميذ القصص ويكتبون الجمل.»"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

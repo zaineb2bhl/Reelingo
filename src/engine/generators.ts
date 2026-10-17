@@ -12,6 +12,8 @@ export interface GeneratedVideo {
   data: unknown;
   /** Where the content comes from, shown to the teacher (not in the video). */
   source: string;
+  /** Passage id the content is based on, when there is one. */
+  passage?: number;
 }
 
 export interface GenContext {
@@ -188,7 +190,7 @@ export function generateWordOfDay(ctx: GenContext, count: number): GeneratedVide
     if (!parsed.success) continue;
     ctx.used.add(term.key);
     const where = term.definitionSource === 'document' ? term.definitionPassage : (example?.passage.id ?? term.occurrences[0]?.passage);
-    out.push({ formatId: 'word-of-the-day', data: parsed.data, source: sourceNote(a, where, term.definitionSource === 'dictionary' ? 'definition: WordNet' : undefined) });
+    out.push({ formatId: 'word-of-the-day', data: parsed.data, source: sourceNote(a, where, term.definitionSource === 'dictionary' ? 'definition: WordNet' : undefined), passage: where });
   }
   return out;
 }
@@ -215,7 +217,7 @@ function gapQuiz(ctx: GenContext, term: Term): GeneratedVideo | null {
       explanation: shorten(def ? s.explainAnswer(term.display, ensureStop(lowerFirst(def))) : s.fromText(passage.text), 240),
     };
     const parsed = quizSchema.safeParse(data);
-    if (parsed.success) return { formatId: 'quiz', data: parsed.data, source: sourceNote(a, passage.id) };
+    if (parsed.success) return { formatId: 'quiz', data: parsed.data, source: sourceNote(a, passage.id), passage: passage.id };
   }
   return null;
 }
@@ -246,7 +248,8 @@ function meaningQuiz(ctx: GenContext, term: Term): GeneratedVideo | null {
   };
   const parsed = quizSchema.safeParse(data);
   if (!parsed.success) return null;
-  return { formatId: 'quiz', data: parsed.data, source: sourceNote(a, term.definitionPassage ?? example?.passage.id, term.definitionSource === 'dictionary' ? 'definition: WordNet' : undefined) };
+  const where = term.definitionPassage ?? example?.passage.id;
+  return { formatId: 'quiz', data: parsed.data, source: sourceNote(a, where, term.definitionSource === 'dictionary' ? 'definition: WordNet' : undefined), passage: where };
 }
 
 export function generateQuizzes(ctx: GenContext, count: number): GeneratedVideo[] {
@@ -286,7 +289,7 @@ function trueFalseFor(ctx: GenContext, term: Term, wantTrue: boolean): Generated
   const build = (statement: string, answer: boolean, explanation: string, passageId: number | undefined, extra?: string): GeneratedVideo | null => {
     const data: TrueFalseData = { ...base, statement: shorten(statement, 180), answer, explanation: shorten(explanation, 240) };
     const parsed = trueFalseSchema.safeParse(data);
-    return parsed.success ? { formatId: 'true-false', data: parsed.data, source: sourceNote(a, passageId, extra) } : null;
+    return parsed.success ? { formatId: 'true-false', data: parsed.data, source: sourceNote(a, passageId, extra), passage: passageId } : null;
   };
 
   // 1. A sentence from the document, as-is (true) or changed (false).
@@ -371,7 +374,7 @@ export function generateTop5(ctx: GenContext, count: number): GeneratedVideo[] {
     };
     const parsed = top5Schema.safeParse(data);
     if (!parsed.success) continue;
-    out.push({ formatId: 'top5', data: parsed.data, source: sourceNote(a, group.passage, group.heading ? undefined : a.name) });
+    out.push({ formatId: 'top5', data: parsed.data, source: sourceNote(a, group.passage, group.heading ? undefined : a.name), passage: group.passage });
   }
   return out;
 }

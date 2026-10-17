@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { BottomBar } from '@/components/BottomBar';
 import { BrandingSection } from '@/components/BrandingSection';
+import { DocumentPanel } from '@/components/DocumentPanel';
 import { Player } from '@/components/Player';
 import { SaveControl } from '@/components/SaveControl';
 import { ThemePicker } from '@/components/ThemePicker';
 import { Section } from '@/components/ui/fields';
+import { DOCUMENT_FORMATS } from '@/ai/summary';
 import { getFormat } from '@/formats/registry';
 import { issuesToErrors } from '@/formats/shared';
 import type { AnyFormat } from '@/formats/types';
@@ -16,7 +18,7 @@ import { useDraft, useEditor } from '@/state/editor';
 import { resolveTheme } from '@/themes';
 import { hrefFor } from './router';
 
-export function EditorPage({ formatId }: { formatId: string }) {
+export function EditorPage({ formatId, fromDocument = false }: { formatId: string; fromDocument?: boolean }) {
   const t = useT();
   const format = getFormat(formatId);
   if (!format) {
@@ -29,10 +31,10 @@ export function EditorPage({ formatId }: { formatId: string }) {
       </div>
     );
   }
-  return <Editor key={format.id} format={format} />;
+  return <Editor key={format.id} format={format} fromDocument={fromDocument} />;
 }
 
-export function Editor({ format }: { format: AnyFormat }) {
+export function Editor({ format, fromDocument = false }: { format: AnyFormat; fromDocument?: boolean }) {
   const t = useT();
   const locale = useLocale();
   const data = useDraft(format);
@@ -100,6 +102,9 @@ export function Editor({ format }: { format: AnyFormat }) {
                 <p className="rounded-xl bg-lilac/8 px-3 py-2 text-xs text-ink/70 ring-1 ring-lilac/20" dir="auto">
                   <span className="font-semibold">{t('series.fromDocument')}:</span> {projectNote}
                 </p>
+              )}
+              {DOCUMENT_FORMATS.includes(format.id) && (
+                <DocumentPanel format={format} defaultOpen={fromDocument} onApply={(next) => setDraft(format.id, next)} />
               )}
               <Form value={data} onChange={(next) => setDraft(format.id, next)} errors={errors} />
             </Section>

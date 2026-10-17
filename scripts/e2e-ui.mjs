@@ -90,7 +90,7 @@ try {
   await page.waitForFunction(() => document.body.textContent?.includes('e2e-tone.wav'), { timeout: 10000 });
   await page.click('footer button[aria-expanded]');
   await page.click('footer [role=switch]');
-  const logoInput = await page.$('aside input[type=file]');
+  const logoInput = await page.$('aside input[type=file][accept*="image/png"]');
   await logoInput.uploadFile(svgPath);
   await page.waitForFunction(() => document.body.textContent?.includes('e2e-logo.svg'), { timeout: 10000 });
   await sleep(2500);

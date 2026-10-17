@@ -5,7 +5,6 @@ import { useSettings } from '@/state/settings';
 import { EditorPage } from './EditorPage';
 import { HomePage } from './HomePage';
 import { ProjectPage } from './ProjectPage';
-import { SeriesPage } from './SeriesPage';
 import { SettingsPage } from './SettingsPage';
 import { hrefFor, useRoute } from './router';
 
@@ -31,8 +30,8 @@ export function App() {
         <span className="hidden text-sm text-ink/45 md:inline">{t('app.tagline')}</span>
         <div className="flex-1" />
         <a
-          href={hrefFor({ name: 'series' })}
-          className={`hidden rounded-lg px-2.5 py-1.5 text-sm font-semibold transition sm:inline ${route.name === 'series' ? 'bg-ink text-white' : 'text-ink/60 hover:bg-ink/5 hover:text-ink'}`}
+          href={hrefFor({ name: 'editor', formatId: 'quiz', fromDocument: true })}
+          className={`hidden rounded-lg px-2.5 py-1.5 text-sm font-semibold transition sm:inline ${route.name === 'editor' && route.fromDocument ? 'bg-ink text-white' : 'text-ink/60 hover:bg-ink/5 hover:text-ink'}`}
         >
           {t('nav.series')}
         </a>
@@ -62,13 +61,11 @@ export function App() {
         </select>
       </header>
       {route.name === 'editor' ? (
-        <EditorPage formatId={route.formatId} />
+        <EditorPage formatId={route.formatId} fromDocument={route.fromDocument ?? false} />
       ) : route.name === 'project' ? (
         <ProjectPage id={route.id} />
       ) : route.name === 'settings' ? (
         <SettingsPage />
-      ) : route.name === 'series' ? (
-        <SeriesPage />
       ) : (
         <HomePage />
       )}

@@ -112,7 +112,7 @@ function buildPassages(doc: SourceDocument, lang: Lang): { passages: Passage[]; 
 /* Focus (retrieval)                                                   */
 /* ------------------------------------------------------------------ */
 
-function queryStems(query: string, lang: Lang): string[] {
+export function queryStems(query: string, lang: Lang): string[] {
   return tokenize(query)
     .filter((t) => /\d/.test(t.norm) || (!isStopword(t.norm, lang) && t.norm.length > 1))
     .map((t) => stem(t.norm, lang));

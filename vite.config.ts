@@ -12,5 +12,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts', 'tests/**/*.test.ts'],
+    // Keep memory use modest (local LLMs often share the machine).
+    maxWorkers: 2,
   },
 });

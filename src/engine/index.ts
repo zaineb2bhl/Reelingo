@@ -1,5 +1,5 @@
 import { hashString, mulberry32 } from '@/scene/random';
-import { analyze } from './analyze';
+import { analyze, type Analysis } from './analyze';
 import { generateQuizzes, generateTop5, generateTrueFalse, generateWordOfDay, type GenContext, type GeneratedVideo } from './generators';
 import type { Lexicon } from './lexicon';
 import { CONTENT_STRINGS } from './strings';
@@ -35,6 +35,19 @@ const GENERATORS: Record<string, (ctx: GenContext, count: number) => GeneratedVi
 
 /** Order matters: formats that need one strong term each go first. */
 const ORDER = ['word-of-the-day', 'quiz', 'true-false', 'top5'];
+
+/** Runs one format's rule-based generator on an existing analysis. */
+export function generateForFormat(analysis: Analysis, formatId: string, count: number, seed = ''): GeneratedVideo[] {
+  const generate = GENERATORS[formatId];
+  if (!generate || count <= 0) return [];
+  const ctx: GenContext = {
+    a: analysis,
+    s: CONTENT_STRINGS[analysis.lang],
+    used: new Set(),
+    rand: mulberry32(hashString(`${analysis.name}|${seed}|${formatId}`)),
+  };
+  return generate(ctx, count);
+}
 
 /**
  * Builds a series of videos from a document using only the document itself

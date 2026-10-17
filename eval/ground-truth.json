@@ -1,0 +1,266 @@
+{
+  "$comment": "Hand-labelled ground truth. 'relevant' lists the sentences (or table rows / list items, matched as substrings) that a good retriever should return for the instructions. 'reference' are questions a teacher would write, kept for manual comparison.",
+  "docs": [
+    {
+      "file": "en-office.md",
+      "queries": [
+        {
+          "instructions": "2 quiz questions about deadlines",
+          "formatId": "quiz",
+          "relevant": [
+            "Today the team must finish the report before the deadline.",
+            "Good communication helps a team to meet its deadlines.",
+            "the time by which a task must be finished"
+          ]
+        },
+        {
+          "instructions": "2 true or false statements about phrasal verbs",
+          "formatId": "true-false",
+          "relevant": [
+            "The meeting was put off until Friday because the manager was ill.",
+            "Tom filled in for Sarah while she was on holiday.",
+            "to delay doing something"
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "Why was the meeting put off?",
+          "answer": "Because the manager was ill."
+        },
+        {
+          "question": "Today the team must finish the report before the ___.",
+          "answer": "deadline"
+        }
+      ]
+    },
+    {
+      "file": "en-travel.md",
+      "queries": [
+        {
+          "instructions": "2 words about luggage and tickets",
+          "formatId": "word-of-the-day",
+          "relevant": [
+            "Passengers wait on the platform with their luggage.",
+            "The conductor checked every ticket and helped an old man with his luggage.",
+            "the bags you take on a journey",
+            "a piece of paper that lets you travel"
+          ]
+        },
+        {
+          "instructions": "top 5 words about the train",
+          "formatId": "top5",
+          "relevant": [
+            "The train leaves from platform three at nine o'clock.",
+            "the place where you get on a train",
+            "Trains are often faster than cars and more comfortable than buses."
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "Why was there a long delay yesterday?",
+          "answer": "Because of the snow."
+        },
+        {
+          "question": "How long does the journey to the coast take?",
+          "answer": "Two hours."
+        }
+      ]
+    },
+    {
+      "file": "en-food.md",
+      "queries": [
+        {
+          "instructions": "2 questions on countable and uncountable nouns",
+          "formatId": "quiz",
+          "relevant": [
+            "We can count carrots and onions, so they are countable nouns.",
+            "Salt, rice and water are uncountable nouns.",
+            "We say \"a few carrots\" but \"a little salt\"."
+          ]
+        },
+        {
+          "instructions": "2 true or false statements about Maria's shopping",
+          "formatId": "true-false",
+          "relevant": [
+            "She writes a shopping list so she does not forget any ingredient.",
+            "A big bag of potatoes costs only two euros, which is a real bargain.",
+            "The cashier gives Maria a receipt, and she puts it in her purse."
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "Is salt countable or uncountable?",
+          "answer": "Uncountable."
+        },
+        {
+          "question": "How much does a big bag of potatoes cost?",
+          "answer": "Two euros."
+        }
+      ]
+    },
+    {
+      "file": "en-past-simple.md",
+      "queries": [
+        {
+          "instructions": "2 quiz questions on irregular verbs",
+          "formatId": "quiz",
+          "relevant": [
+            "Many common verbs are irregular.",
+            "Go becomes went, see becomes saw and buy becomes bought."
+          ]
+        },
+        {
+          "instructions": "1 word from Ahmed's weekend story",
+          "formatId": "word-of-the-day",
+          "relevant": [
+            "Last weekend, Ahmed visited London with his sister.",
+            "Ahmed did not like the weather because it rained all day on Sunday.",
+            "In the afternoon they bought souvenirs at a market."
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "What is the past simple of 'buy'?",
+          "answer": "bought"
+        },
+        {
+          "question": "Why did Ahmed not like the weather?",
+          "answer": "Because it rained all day on Sunday."
+        }
+      ]
+    },
+    {
+      "file": "en-health.md",
+      "queries": [
+        {
+          "instructions": "2 true or false statements about sleep",
+          "formatId": "true-false",
+          "relevant": [
+            "Doctors say that adults should sleep seven to nine hours every night.",
+            "Many people sleep less because they use their phones in bed.",
+            "Stress can cause headaches and make it hard to sleep."
+          ]
+        },
+        {
+          "instructions": "top 5 healthy habits",
+          "formatId": "top5",
+          "relevant": [
+            "habit – something you do often, almost without thinking",
+            "A good habit takes about two months to form, so it is important to be patient.",
+            "Walking for thirty minutes a day is a simple form of exercise."
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "How many hours should adults sleep?",
+          "answer": "Seven to nine hours."
+        },
+        {
+          "question": "How long does a good habit take to form?",
+          "answer": "About two months."
+        }
+      ]
+    },
+    {
+      "file": "fr-marche.md",
+      "queries": [
+        {
+          "instructions": "2 questions sur les articles partitifs",
+          "formatId": "quiz",
+          "relevant": [
+            "On utilise du, de la et des pour une quantité non précise",
+            "Après une négation, on utilise de : je ne mange pas de viande."
+          ]
+        },
+        {
+          "instructions": "2 mots sur le marché",
+          "formatId": "word-of-the-day",
+          "relevant": [
+            "Chaque samedi, Marie va au marché avec sa grand-mère.",
+            "un lieu où on achète des produits frais",
+            "Au marché, les vendeurs proposent souvent de goûter leurs produits."
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "Je ne mange pas ___ viande.",
+          "answer": "de"
+        },
+        {
+          "question": "Avec qui Marie va-t-elle au marché ?",
+          "answer": "Avec sa grand-mère."
+        }
+      ]
+    },
+    {
+      "file": "fr-meteo.md",
+      "queries": [
+        {
+          "instructions": "2 vrai ou faux sur la pluie et l'orage",
+          "formatId": "true-false",
+          "relevant": [
+            "La météo annonce de la pluie pour l'après-midi.",
+            "Le soir, un orage éclate et la ville est sous l'eau.",
+            "l'eau qui tombe des nuages"
+          ]
+        },
+        {
+          "instructions": "2 questions sur le futur proche",
+          "formatId": "quiz",
+          "relevant": [
+            "On forme le futur proche avec aller au présent et un verbe à l'infinitif : il va pleuvoir.",
+            "On l'utilise pour une action qui va arriver bientôt : nous allons partir à huit heures."
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "Comment forme-t-on le futur proche ?",
+          "answer": "Avec aller au présent et un verbe à l'infinitif."
+        },
+        {
+          "question": "Que prend Paul avant de partir ?",
+          "answer": "Son parapluie."
+        }
+      ]
+    },
+    {
+      "file": "ar-school.md",
+      "queries": [
+        {
+          "instructions": "2 أسئلة عن المكتبة",
+          "formatId": "quiz",
+          "relevant": [
+            "بعد الدرس، يذهب أحمد إلى المكتبة ليقرأ كتابًا.",
+            "مكان فيه كتب كثيرة"
+          ]
+        },
+        {
+          "instructions": "2 صح أو خطأ عن أحمد",
+          "formatId": "true-false",
+          "relevant": [
+            "يذهب أحمد إلى المدرسة كل صباح.",
+            "يحب أحمد معلم اللغة العربية كثيرًا.",
+            "في المساء، يكتب أحمد الواجب ويراجع دروسه."
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "question": "أين يذهب أحمد بعد الدرس؟",
+          "answer": "إلى المكتبة."
+        },
+        {
+          "question": "متى يكتب أحمد الواجب؟",
+          "answer": "في المساء."
+        }
+      ]
+    }
+  ]
+}

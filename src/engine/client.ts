@@ -1,9 +1,9 @@
-import type { SeriesRequest, SeriesResult } from './index';
+import type { PrepareRequest, PreparedDocument } from '@/ai/prepare';
 import type { SourceDocument } from './types';
 import type { WorkerRequest, WorkerResponse } from './worker';
 
-/** Runs the analysis + generation in a Web Worker so the page stays responsive. */
-export function runSeriesInWorker(doc: SourceDocument, request: SeriesRequest, signal?: AbortSignal): Promise<SeriesResult> {
+/** Runs analysis + retrieval + rule-based candidates in a Web Worker. */
+export function prepareInWorker(doc: SourceDocument, request: PrepareRequest, signal?: AbortSignal): Promise<PreparedDocument> {
   return new Promise((resolve, reject) => {
     const worker = new Worker(new URL('./worker.ts', import.meta.url), { type: 'module' });
     const done = (): void => worker.terminate();
