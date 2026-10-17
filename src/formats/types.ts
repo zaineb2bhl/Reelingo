@@ -45,11 +45,6 @@ export interface FormatModule<T> {
   duration: (data: T) => number;
   /** Sound effect cues, optional. */
   cues?: (data: T) => Cue[];
-  /**
-   * Optional notes for "AI fill": what each field is for and its length
-   * limits (the API's structured output mode drops min/max constraints).
-   */
-  aiGuide?: string;
 }
 
 /** Type-erased format as stored in the registry. Data is validated by `schema`. */

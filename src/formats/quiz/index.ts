@@ -18,6 +18,4 @@ export default defineFormat<QuizData>({
   render: renderQuiz,
   duration: quizDuration,
   cues: quizCues,
-  aiGuide:
-    'label: short header (≤30 chars), e.g. "Quick quiz". question: ≤160 chars, may wrap one key word in *stars*. options: 2–4 items, each text ≤80 chars, set correct=true on exactly the right answer(s), plausible distractors. pace: "quick" | "standard" | "relaxed". explanation: ≤240 chars, why the answer is right, may use *stars*.',
 });

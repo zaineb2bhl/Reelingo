@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react';
-import { DOCUMENT_ACCEPT, DocumentError, prepareDocument } from '@/ai/document';
-import { AiError } from '@/ai/generate';
-import { AI_ERROR_KEYS, DOCUMENT_ERROR_KEYS } from '@/ai/messages';
-import { generateSeriesForFormat, MAX_SERIES_VIDEOS } from '@/ai/series';
+import { useRef, useState, type ReactNode } from 'react';
 import { ThemePicker } from '@/components/ThemePicker';
 import { FileButton, UploadIcon } from '@/components/ui/FileButton';
 import { Field, Section, TextArea } from '@/components/ui/fields';
+import { runSeriesInWorker } from '@/engine/client';
+import type { SeriesResult } from '@/engine/index';
+import { MAX_SERIES_VIDEOS } from '@/engine/limits';
+import { DOCUMENT_ERROR_KEYS } from '@/engine/messages';
+import { DOCUMENT_ACCEPT, DocumentError, readDocument } from '@/engine/reader';
 import { getFormat, visibleFormats } from '@/formats/registry';
 import { pickText, useLocale, useT } from '@/i18n';
 import { loadLogo } from '@/media/hooks';
@@ -13,7 +14,6 @@ import type { FrameBranding } from '@/render/branding';
 import { renderThumbnail } from '@/render/thumbnail';
 import { useEditor } from '@/state/editor';
 import { useSeries } from '@/state/series';
-import { useSettings } from '@/state/settings';
 import { getMedia, saveMedia } from '@/storage/media';
 import { newProjectId, saveProject } from '@/storage/projects';
 import { resolveTheme } from '@/themes';
@@ -21,14 +21,8 @@ import { hrefFor } from './router';
 
 const PER_FORMAT_MAX = 5;
 
-type JobStatus = 'waiting' | 'running' | 'done' | 'error';
-interface Job {
-  formatId: string;
-  count: number;
-  status: JobStatus;
-  created: number;
-  error?: string;
-}
+type Phase = 'idle' | 'reading' | 'analysing' | 'saving' | 'done';
+
 interface Result {
   id: string;
   name: string;
@@ -39,26 +33,25 @@ interface Result {
 export function SeriesPage() {
   const t = useT();
   const locale = useLocale();
-  const apiKey = useSettings((s) => s.apiKey);
-  const model = useSettings((s) => s.aiModel);
   const { docId, docName, docSize, instructions, counts, setDocument, setInstructions, setCount } = useSeries();
   const themeId = useEditor((s) => s.themeId);
   const accent = useEditor((s) => s.accent);
   const [docError, setDocError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [phase, setPhase] = useState<Phase>('idle');
+  const [summary, setSummary] = useState<SeriesResult | null>(null);
   const [results, setResults] = useState<Result[]>([]);
-  const [running, setRunning] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
   const total = visibleFormats.reduce((sum, f) => sum + (counts[f.id] ?? 0), 0);
-  const canGenerate = !!apiKey && !!docId && total > 0 && !running;
+  const running = phase !== 'idle' && phase !== 'done';
 
   const upload = async (file: File): Promise<void> => {
     setDocError(null);
     setUploading(true);
     try {
-      await prepareDocument(file); // validates type, size and readable text up front
+      await readDocument(file); // validates type, size and that there is readable text
       const rec = await saveMedia('document', file);
       setDocument(rec.id, file.name, file.size);
     } catch (err) {
@@ -68,78 +61,74 @@ export function SeriesPage() {
     }
   };
 
-  const updateJob = (formatId: string, patch: Partial<Job>): void =>
-    setJobs((list) => list.map((j) => (j.formatId === formatId ? { ...j, ...patch } : j)));
-
   const generate = async (): Promise<void> => {
     if (!docId) return;
+    setActionError(null);
+    if (total === 0) {
+      setActionError(t('series.errNoVideos'));
+      return;
+    }
     const controller = new AbortController();
     abortRef.current = controller;
-    const plan: Job[] = visibleFormats
-      .filter((f) => (counts[f.id] ?? 0) > 0)
-      .map((f) => ({ formatId: f.id, count: counts[f.id] ?? 0, status: 'waiting', created: 0 }));
-    setJobs(plan);
     setResults([]);
-    setRunning(true);
-
+    setSummary(null);
     try {
+      setPhase('reading');
       const rec = await getMedia(docId);
       if (!rec) {
         setDocument(null, '', 0);
         setDocError(t('series.errMissing'));
+        setPhase('idle');
         return;
       }
-      const doc = await prepareDocument(new File([rec.blob], rec.name, { type: rec.type }));
+      const doc = await readDocument(new File([rec.blob], rec.name, { type: rec.type }));
+
+      setPhase('analysing');
+      const wanted = Object.fromEntries(visibleFormats.map((f) => [f.id, counts[f.id] ?? 0] as const).filter(([, n]) => n > 0));
+      const result = await runSeriesInWorker(doc, { counts: wanted, query: instructions }, controller.signal);
+
+      setPhase('saving');
       const editor = useEditor.getState();
       const theme = resolveTheme(editor.themeId, editor.accent);
       const logo = editor.branding.logoId ? await loadLogo(editor.branding.logoId) : null;
       const branding: FrameBranding = { ...editor.branding, logo };
       const docBase = rec.name.replace(/\.[^.]+$/, '').slice(0, 32);
-
-      // Sequential on purpose: the first request caches the document, later ones reuse it.
-      for (const job of plan) {
+      const numbering = new Map<string, number>();
+      for (const video of result.videos) {
         if (controller.signal.aborted) break;
-        const format = getFormat(job.formatId);
+        const format = getFormat(video.formatId);
         if (!format) continue;
-        updateJob(job.formatId, { status: 'running' });
-        try {
-          const items = await generateSeriesForFormat(format, job.count, doc, instructions, { apiKey, model, signal: controller.signal });
-          const title = pickText(locale, format.title);
-          for (const [k, item] of items.entries()) {
-            const now = Date.now();
-            const id = newProjectId();
-            const name = `${docBase} · ${title} ${k + 1}`;
-            const note = item.source ? `${rec.name}: ${item.source}` : rec.name;
-            const thumbnail = renderThumbnail(format, item.data, theme, branding);
-            await saveProject({
-              id,
-              name,
-              formatId: format.id,
-              data: item.data,
-              themeId: editor.themeId,
-              accent: editor.accent,
-              branding: editor.branding,
-              audio: editor.audio,
-              note,
-              createdAt: now,
-              updatedAt: now,
-              thumbnail,
-            });
-            setResults((list) => [...list, { id, name, thumbnail, note: item.source }]);
-          }
-          updateJob(job.formatId, { status: 'done', created: items.length });
-        } catch (err) {
-          if (controller.signal.aborted) break;
-          console.error(err);
-          updateJob(job.formatId, { status: 'error', error: t(err instanceof AiError ? AI_ERROR_KEYS[err.kind] : 'ai.errUnknown') });
-          // A bad key or rate limit will fail every remaining job the same way.
-          if (err instanceof AiError && ['auth', 'noKey', 'rateLimit', 'network'].includes(err.kind)) break;
-        }
+        const n = (numbering.get(format.id) ?? 0) + 1;
+        numbering.set(format.id, n);
+        const now = Date.now();
+        const id = newProjectId();
+        const name = `${docBase} · ${pickText(locale, format.title)} ${n}`;
+        const thumbnail = renderThumbnail(format, video.data, theme, branding);
+        await saveProject({
+          id,
+          name,
+          formatId: format.id,
+          data: video.data,
+          themeId: editor.themeId,
+          accent: editor.accent,
+          branding: editor.branding,
+          audio: editor.audio,
+          note: `${rec.name} · ${video.source}`,
+          createdAt: now,
+          updatedAt: now,
+          thumbnail,
+        });
+        setResults((list) => [...list, { id, name, thumbnail, note: video.source }]);
       }
+      setSummary(result);
+      setPhase('done');
     } catch (err) {
-      setDocError(t(err instanceof DocumentError ? DOCUMENT_ERROR_KEYS[err.code] : 'series.errUnreadable'));
+      setPhase('idle');
+      if (controller.signal.aborted) return;
+      console.error(err);
+      if (err instanceof DocumentError) setDocError(t(DOCUMENT_ERROR_KEYS[err.code]));
+      else setActionError(t('series.errGenerate'));
     } finally {
-      setRunning(false);
       abortRef.current = null;
     }
   };
@@ -163,8 +152,8 @@ export function SeriesPage() {
           </FileButton>
         </div>
         {docError && <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm font-medium text-rose-700">{docError}</p>}
-        <Field label={t('series.instructions')} optional>
-          {(id) => <TextArea id={id} rows={2} value={instructions} maxLength={400} placeholder={t('series.instructionsPlaceholder')} onChange={setInstructions} />}
+        <Field label={t('series.instructions')} optional hint={t('series.instructionsHint')}>
+          {(id) => <TextArea id={id} rows={2} value={instructions} maxLength={200} placeholder={t('series.instructionsPlaceholder')} onChange={setInstructions} />}
         </Field>
       </Section>
 
@@ -190,17 +179,14 @@ export function SeriesPage() {
       </Section>
 
       <Section title={t('series.style')}>
-        <ThemePicker
-          themeId={themeId}
-          accent={accent}
-          onTheme={(id) => useEditor.getState().setTheme(id)}
-          onAccent={(a) => useEditor.getState().setAccent(a)}
-        />
+        <ThemePicker themeId={themeId} accent={accent} onTheme={(id) => useEditor.getState().setTheme(id)} onAccent={(a) => useEditor.getState().setAccent(a)} />
         <p className="text-xs text-ink/50">{t('series.styleHint')}</p>
       </Section>
 
       <div className="space-y-3">
-        <div className="flex flex-wrap justify-end gap-2">
+        {actionError && <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm font-medium text-rose-700">{actionError}</p>}
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          {running && <span className="text-sm text-ink/55">{t(`series.phase.${phase as 'reading' | 'analysing' | 'saving'}`)}</span>}
           {running && (
             <button type="button" onClick={() => abortRef.current?.abort()} className="rounded-xl px-4 py-2.5 text-sm font-semibold text-ink/60 hover:bg-ink/5">
               {t('export.cancel')}
@@ -208,7 +194,7 @@ export function SeriesPage() {
           )}
           <button
             type="button"
-            disabled={!canGenerate}
+            disabled={!docId || running}
             onClick={() => void generate()}
             className="flex items-center gap-2 rounded-xl bg-tangerine px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-tangerine/90 disabled:opacity-40"
           >
@@ -218,25 +204,19 @@ export function SeriesPage() {
         </div>
       </div>
 
-      {jobs.length > 0 && (
-        <Section title={t('series.progress')}>
-          <ul className="space-y-2">
-            {jobs.map((job) => {
-              const format = getFormat(job.formatId);
-              return (
-                <li key={job.formatId} className="flex items-center gap-3 text-sm">
-                  <StatusDot status={job.status} />
-                  <span className="flex-1 font-medium">
-                    {format ? pickText(locale, format.title) : job.formatId} × {job.count}
-                  </span>
-                  <span className={`text-xs ${job.status === 'error' ? 'font-medium text-rose-600' : 'text-ink/55'}`}>
-                    {job.status === 'done' ? t('series.status.done', { n: job.created }) : job.status === 'error' ? (job.error ?? t('series.status.error')) : t(`series.status.${job.status}`)}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </Section>
+      {summary && (
+        <div className="space-y-2">
+          {!summary.matchedQuery && <Notice>{t('series.noMatch')}</Notice>}
+          {summary.shortfalls.map((s) => {
+            const format = getFormat(s.formatId);
+            return (
+              <Notice key={s.formatId}>
+                {t('series.shortfall', { made: s.made, requested: s.requested, format: format ? pickText(locale, format.title) : s.formatId })}
+              </Notice>
+            );
+          })}
+          {summary.videos.length === 0 && <Notice>{t('series.nothing')}</Notice>}
+        </div>
       )}
 
       {results.length > 0 && (
@@ -270,6 +250,10 @@ export function SeriesPage() {
   );
 }
 
+function Notice({ children }: { children: ReactNode }) {
+  return <p className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900 ring-1 ring-amber-200">{children}</p>;
+}
+
 function formatBytes(bytes: number): string {
   return bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
@@ -285,10 +269,4 @@ function StepButton({ label, disabled, onClick }: { label: string; disabled: boo
       {label}
     </button>
   );
-}
-
-function StatusDot({ status }: { status: JobStatus }) {
-  if (status === 'running') return <span className="h-3 w-3 animate-spin rounded-full border-2 border-tangerine/30 border-t-tangerine" />;
-  const color = status === 'done' ? 'bg-emerald-500' : status === 'error' ? 'bg-rose-500' : 'bg-ink/20';
-  return <span className={`h-2.5 w-2.5 rounded-full ${color}`} />;
 }

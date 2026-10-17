@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { AiFill } from '@/components/AiFill';
 import { BottomBar } from '@/components/BottomBar';
 import { BrandingSection } from '@/components/BrandingSection';
 import { Player } from '@/components/Player';
@@ -102,7 +101,6 @@ export function Editor({ format }: { format: AnyFormat }) {
                   <span className="font-semibold">{t('series.fromDocument')}:</span> {projectNote}
                 </p>
               )}
-              <AiFill format={format} onResult={(next) => setDraft(format.id, next)} />
               <Form value={data} onChange={(next) => setDraft(format.id, next)} errors={errors} />
             </Section>
             <Section title={t('editor.style')}>

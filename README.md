@@ -22,8 +22,7 @@ The name is a placeholder: change `APP_NAME` in [src/config.ts](src/config.ts), 
   - The UI is available in English, French and Arabic, with an RTL interface for Arabic.
 - **`*Star*` markup**: wrap a word in `*stars*` to colour it on screen.
 - **Projects** are saved in IndexedDB, with thumbnails. Once a project has been saved, it autosaves.
-- **AI fill (optional)**: describe a topic and Claude drafts the template content. This uses your own Anthropic API key (see below).
-- **Turn a document into a series (optional)**: upload a PDF, Word (.docx), TXT or Markdown file, choose how many of each template you want, and Claude writes up to 10 videos based only on that document. Each video is saved as a project with a note pointing to where in the document it came from.
+- **Turn a document into a series**: upload a PDF, Word (.docx), TXT or Markdown lesson, choose how many of each template you want, and the app's own content engine builds up to 10 videos from that document: no AI service, no API key, nothing leaves the browser. Each video is saved as a project with a note showing where in the document it came from.
 
 ## Getting started
 
@@ -42,10 +41,12 @@ npm run dev        # http://localhost:5173
 | `npm test` | Unit tests plus a smoke test that renders frames of every format in Node |
 | `npm run sheet -- <formatId> <themeId> out.png ['{json data}']` | Renders a strip of 8 frames to PNG, handy for checking timing and layout |
 | `npm run e2e:export -- [formatId\|all] [outDir]` | Exports each format in a real Chrome, reports render time, and validates the MP4 (H.264 track, audio track, duration, non-silent audio) |
-| `npm run e2e:series -- <document> [outDir]` | Runs the document-to-series flow in Chrome with the Anthropic API stubbed (no credit used) and checks that the projects are created |
+| `npm run e2e:series -- [outDir] [extra documents…]` | Generates a sample PDF and Markdown lesson, runs the document-to-series flow on each in Chrome (plus any extra files), checks the projects and that no external network request is made |
+| `npm run engine:demo -- [file.md\|file.txt] [instructions]` | Runs the content engine in Node on a file (or the bundled English, French and Arabic sample lessons) and prints the generated videos |
+| `npm run lexicon` | Rebuilds the English lexicon (runs automatically before `dev`, `build` and `test`) |
 | `npm run e2e:ui -- [outDir]` | Clicks through the app in Chrome (home, editors, export, save, uploads, Arabic UI, mobile) and saves screenshots |
 
-The two `e2e:*` scripts need the dev server running and a local Chrome or Edge. Set `CHROME_PATH` if yours isn't found automatically.
+The `e2e:*` scripts need the dev server running and a local Chrome or Edge. Set `CHROME_PATH` if yours isn't found automatically.
 
 ## How it works
 
@@ -64,8 +65,8 @@ src/
   audio/             synthesised SFX, mixer (live + offline), preview controller
   export/            WebCodecs + mp4-muxer exporter, MediaRecorder fallback
   storage/           IndexedDB: projects and uploaded media
-  state/             zustand stores (editor, settings)
-  ai/                AI fill: prompt + validated structured output with retry
+  state/             zustand stores (editor, settings, series)
+  engine/            document → videos content engine (runs in a Web Worker)
   i18n/              en (source of truth), fr, ar
   app/, components/  React UI
 ```
@@ -126,8 +127,7 @@ export default defineFormat<FlashcardData>({
     );
     drawTimeline(ctx, theme, t, tl.total);
   },
-  cues: (d) => [{ t: timeline(d).get('back').start, sfx: 'pop' }],     // optional
-  aiGuide: 'front: ≤60 chars, the word. back: ≤120 chars, its meaning.', // optional, for AI fill
+  cues: (d) => [{ t: timeline(d).get('back').start, sfx: 'pop' }], // optional
 });
 ```
 
@@ -138,26 +138,47 @@ Tips:
 - `npm run sheet -- flashcard ink out.png` renders frames so you can check the timing.
 - `src/formats/starter/` is a small, hidden example format to copy from.
 
-## AI fill and your API key
+## Documents → series: the content engine
 
-AI fill is optional. In **Settings**, paste an Anthropic API key and choose a model (Claude Opus 5.5 by default; Sonnet 5.5 and Haiku 5.5 are cheaper). The key is stored only in this browser's `localStorage`. Requests go directly from the browser to `api.anthropic.com` using the official SDK's `dangerouslyAllowBrowser` mode. Usage is billed to the key owner's account.
+The **From a document** page turns a lesson document into videos using classic information retrieval and rule-based question generation. There is no machine-learning model and no external service: every step is deterministic and runs in the browser (inside a Web Worker, so the page stays responsive). The same document and instructions always give the same videos.
 
-Each request asks for structured output generated from the format's Zod schema (`messages.parse` + `betaZodOutputFormat`). The app then re-validates the result with the same schema. On failure it retries once with the validation errors included in the prompt. Server-side refusal fallback (`fallbacks: "default"`) is enabled.
+**1. Reading** ([src/engine/reader.ts](src/engine/reader.ts)). The file is turned into structured blocks: headings, paragraphs, list items, table rows and bold terms.
+- **PDF:** text is read with `pdf.js`. Lines are regrouped into paragraphs, larger or all-caps lines become headings, and "term – meaning" lines are kept as separate entries.
+- **Word (.docx):** converted to HTML with `mammoth`, which keeps headings, lists, tables and bold text.
+- **Markdown and plain text:** parsed directly.
 
-### Documents → series
+**2. Text processing** ([src/engine/text.ts](src/engine/text.ts)). The engine works out:
+- the document's language (English, French or Arabic), from the script and common words,
+- sentence boundaries, without breaking on abbreviations,
+- tokens and stopwords,
+- light stems, so inflected forms match ("carottes" ~ "carotte", "deadlines" ~ "deadline", "المكتبة" ~ "مكتبة").
 
-The **From a document** page doesn't use classic RAG (chunking, embeddings, vector search), because it doesn't need it. The whole document goes to Claude, which reads it in full:
-- **PDFs** are sent as-is, so Claude also sees tables and images.
-- **DOCX files** are converted to text in the browser with `mammoth`.
-- **TXT and Markdown files** are sent as text.
+**3. Retrieval** ([src/engine/search.ts](src/engine/search.ts), `computeFocus`). The optional instructions select part of the document:
+- a heading containing every instruction word ("Unit 3") selects that section,
+- otherwise passages are ranked with **BM25**, the ranking function used by classic search engines.
 
-Limits are 20 MB per file and about 1.5 million characters of text.
+**4. Analysis** ([src/engine/analyze.ts](src/engine/analyze.ts)):
+- **Glossary.** The document's own definitions and translations are found in vocabulary tables (including column roles such as Meaning or Translation), in "term – meaning" / "term: meaning" lines, in "X means Y" / "X signifie Y" / "X تعني Y" sentences, and in bold terms.
+- **Key terms.**
+  - English is tagged with the rule-based NLP library `compromise`, for part of speech, base forms and phrasal verbs.
+  - Terms are ranked by how often they occur in the document compared with everyday English (SUBTLEX word frequency).
+  - French and Arabic use the term's spread across the document (TF-IDF) instead.
+  - Glossary entries, bold terms and words in headings get a boost, and names are filtered out.
+- **Definitions.** The document's own definition comes first. For English words it doesn't define, the app falls back to Princeton WordNet. IPA comes from the CMU Pronouncing Dictionary, converted from ARPAbet.
 
-The app sends one request per template, and each asks for an array of videos with a `source` note. Items are validated one by one, so one bad item doesn't discard the rest, and the app asks once more for any that are missing. The document block is marked for prompt caching, and the requests run one after another, so after the first request the document is read from the cache (cheaper, for a few minutes). Structured output can't be combined with citations, so instead of citations each video carries a free-text source note (page, section or short quote). The editor shows this note above the form so you can check the content against the document.
+**5. Generation** ([src/engine/generators.ts](src/engine/generators.ts)). Every output is validated against the template's Zod schema.
+- **Quiz:** two kinds, alternated.
+  - **Fill the gap:** a real sentence from the document with a key word blanked out. The wrong answers are other key words from the document with the same part of speech and grammatical form (plural, past tense…). For English verbs they're conjugated to match.
+  - **What does X mean?** The wrong answers are other definitions from the same source.
+- **True or False:** a true statement is a sentence from the document. A false one is a document sentence that has been negated (English), or had a key word swapped for another, or a term paired with the wrong definition. The explanation quotes the original sentence.
+- **Word of the day:** word, IPA, part of speech, definition, translation from the glossary, and an example sentence from the document with the word highlighted.
+- **Top 5:** the five strongest terms of a section, each with its meaning.
 
-The document is stored in the browser (IndexedDB) for reuse, and is sent to Anthropic only when you click Generate.
+Labels and explanations are written in the document's language. If the document doesn't have enough material for a template, the app says so instead of inventing content.
 
-Because the key sits in the browser, anyone with access to that browser profile can read it. For a public deployment where you supply the key yourself, put a small server-side proxy in front of the API instead.
+**Lexicon data.** `scripts/build-lexicon.mjs` builds three files into `public/lexicon/` from npm packages: word frequencies (SUBTLEX-US, 0.5 MB), IPA (CMU Pronouncing Dictionary, 1.1 MB) and definitions (Princeton WordNet 3.1, 5.2 MB). The script runs automatically before `dev`, `build` and `test`, and the output is git-ignored. The files are loaded only for English documents.
+
+Attribution: WordNet 3.1 © Princeton University (WordNet licence); CMU Pronouncing Dictionary © Carnegie Mellon University (BSD); SUBTLEX-US word frequencies (Brysbaert & New); `compromise` (MIT); `pdf.js` (Apache-2.0); `mammoth` (BSD-2); `stopwords-iso` (MIT).
 
 ## Browser support
 
@@ -178,7 +199,8 @@ Because the key sits in the browser, anyone with access to that browser profile 
 - **Safe zones** are a general approximation of the Reels/TikTok/Shorts overlays. Each app's UI changes over time.
 - **Preview audio** is scheduled against the Web Audio clock while the picture follows `requestAnimationFrame`. They can drift by a few milliseconds while you're editing, but exports are exact.
 - **Document series**:
-  - Claude's source notes are not verified against the document, so read the videos before you post them.
-  - Scanned PDFs without a text layer depend on Claude reading the page images.
-  - Very long documents (hundreds of pages) make each request slower and more expensive.
+  - **Generated content is mechanical.** Questions come from the document's real sentences, and distractors are other words from the document, so read each video before posting.
+  - **English gets the full toolset:** grammar tagging, dictionary definitions, IPA and verb conjugation. French and Arabic get keywords, retrieval, glossary definitions, fill-the-gap and swaps, but no dictionary fallback, IPA or part of speech unless the document provides them.
+  - **Scanned PDFs** (images without a text layer) can't be read, because there's no OCR.
+  - **Layout detection is heuristic.** Unusual PDF layouts (multi-column pages, text in images) can produce odd paragraphs.
 - **Fonts**: video text uses Inter and Cairo, so scripts they don't cover (for example CJK) fall back to system fonts and may look different on another device.

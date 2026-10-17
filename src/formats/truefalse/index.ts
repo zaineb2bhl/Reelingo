@@ -18,6 +18,4 @@ export default defineFormat<TrueFalseData>({
   render: renderTrueFalse,
   duration: trueFalseDuration,
   cues: trueFalseCues,
-  aiGuide:
-    'label: ≤30 chars, e.g. "True or false?". statement: ≤180 chars, one clear claim, may wrap a key word in *stars*. answer: boolean. trueLabel / falseLabel: ≤14 chars in the video language (e.g. "True"/"False", "Vrai"/"Faux", "صح"/"خطأ"). pace: "quick" | "standard" | "relaxed". explanation: ≤240 chars.',
 });

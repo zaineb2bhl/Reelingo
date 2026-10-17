@@ -18,6 +18,4 @@ export default defineFormat<Top5Data>({
   render: renderTop5,
   duration: top5Duration,
   cues: top5Cues,
-  aiGuide:
-    'title: ≤100 chars, may wrap a key phrase in *stars*. items: 3–5 entries, items[0] is #1 (the best / most important); text ≤60 chars, detail ≤90 chars (one short line). pace: "quick" | "standard" | "relaxed".',
 });
